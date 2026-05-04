@@ -404,13 +404,15 @@
   /* Figma 669:325897 Banner (positive) */
   /* Intermediate lobby — addresses submitted, server-side qualification check */
   .lobby-checking-banner {
-    background: var(--amber-bg);
-    color: var(--amber-text);
+    background: #fff8d6;
+    color: var(--text);
     padding: 16px 24px;
-    border-radius: var(--r-16);
-    font: 500 14px/20px var(--font);
+    border-radius: 16px;
+    font: 500 16px/23px var(--font);
     margin-bottom: 24px;
   }
+  .lobby-edit-icon { width: 16px; height: 16px; flex-shrink: 0; cursor: pointer; color: var(--text); opacity: 0.6; }
+  .lobby-edit-icon:hover { opacity: 1; }
   .lobby-action-lock { font-size: 14px; line-height: 1; opacity: 0.85; }
   .btn-lobby.btn-activate-pending:disabled {
     cursor: not-allowed;
@@ -426,15 +428,15 @@
     font: 500 16px/23px var(--font);
     margin-bottom: 32px;
   }
-  /* Figma 669:325899–921 Property Card */
+  /* Figma Property Card */
   .lobby-property-card {
     display: flex;
     align-items: center;
     min-height: 96px;
-    padding: 16px 32px;
+    padding: 16px 36px;
     margin-bottom: 16px;
     background: var(--bg-muted);
-    border-radius: var(--r-24);
+    border-radius: 24px;
     gap: 16px;
   }
   .lobby-property-card .lobby-card-text {
@@ -444,22 +446,15 @@
     flex-direction: column;
     gap: 4px;
   }
-  .lobby-card-title-row { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; }
+  .lobby-card-title-row { display: flex; flex-wrap: wrap; align-items: center; gap: 4px; }
   .lobby-card-title { font: 600 16px/20px var(--font); color: var(--text); }
   .lobby-card-title.is-muted { opacity: 0.5; }
-  .lobby-card-sub { font: 500 14px/20px var(--font); color: var(--text); }
+  .lobby-card-sub { font: 500 14px/20px var(--font); color: var(--text); display: inline-flex; align-items: center; gap: 4px; }
   .lobby-card-sub.is-muted { opacity: 0.5; }
-  /* Address chip row — column flex stretch was widening the line; shrink-wrap the sub line */
-  .lobby-property-card .lobby-card-sub:has(.lobby-addr-missing-highlight) {
-    align-self: flex-start;
-    width: fit-content;
-    max-width: 100%;
-  }
-  /* Property status dot — Initial / no address: hollow gray; address added (not yet SDP active): solid amber; SDP active: green */
   .lobby-status-dot {
     flex-shrink: 0;
-    width: 10px;
-    height: 10px;
+    width: 8px;
+    height: 8px;
     border-radius: 999px;
     box-sizing: border-box;
     align-self: center;
@@ -471,14 +466,31 @@
   .lobby-status-dot--amber {
     border: none;
     background: var(--amber);
-    box-shadow: 0 0 0 1px rgba(251, 214, 6, 0.5);
   }
   .lobby-status-dot--on {
     border: none;
-    background: var(--green);
-    box-shadow: 0 0 0 1px rgba(146, 227, 81, 0.45);
+    background: #42be65;
   }
-  /* Tag-style chip — width fits content (not full card width) */
+  .lobby-status-dot--red {
+    border: none;
+    background: #da1e28;
+  }
+  .lobby-dot-wrap { position: relative; display: inline-flex; align-items: center; cursor: default; }
+  .lobby-dot-tooltip { visibility: hidden; opacity: 0; position: absolute; bottom: calc(100% + 8px); left: 50%; transform: translateX(-50%); background: black; color: white; font: 500 14px/20px var(--font); padding: 8px 12px; border-radius: 8px; white-space: nowrap; pointer-events: none; transition: opacity 0.15s, visibility 0.15s; z-index: 10; box-shadow: 0 0 16px rgba(52,58,63,0.13); }
+  .lobby-dot-tooltip::after { content: ''; position: absolute; top: 100%; left: 50%; transform: translateX(-50%); border: 5px solid transparent; border-top-color: black; }
+  .lobby-dot-wrap:hover .lobby-dot-tooltip { visibility: visible; opacity: 1; }
+  .lobby-tag {
+    display: inline-flex;
+    align-items: center;
+    padding: 2px 4px;
+    border-radius: 4px;
+    font: 600 12px/16px var(--font);
+    white-space: nowrap;
+  }
+  .lobby-tag--yellow { background: #fff2a8; color: #665702; }
+  .lobby-tag--red { background: #fcadb7; color: #800817; }
+  .lobby-tag--dark { background: #21272a; color: white; }
+  .lobby-tag--green { background: #a7f0ba; color: #0e6027; }
   .lobby-addr-missing-highlight {
     display: inline-block;
     width: fit-content;
@@ -499,7 +511,10 @@
     color: #fff;
     font: 600 12px/16px var(--font);
   }
-  .btn-lobby { min-height: 48px; padding: 0 24px; border-radius: var(--r-32); font: 600 14px/20px var(--font); }
+  .btn-lobby { height: 40px; min-height: 40px; padding: 0 24px; border-radius: 32px; font: 600 16px/23px var(--font); flex-shrink: 0; }
+  .btn-lobby.btn-lobby-dark { background: #21272a; color: white; border: none; }
+  .btn-lobby.btn-lobby-dark:hover { background: #343A3F; }
+  .btn-lobby.btn-lobby-ghost { background: transparent; border: none; color: #6d757d; cursor: default; padding: 0; height: auto; min-height: auto; font: 600 16px/23px var(--font); }
   .kpi .kpi-label { font-size: 12px; color: var(--text-dis); margin-bottom: 4px; }
   .kpi .kpi-value { font-size: 28px; font-weight: 700; }
   .kpi .kpi-change { font-size: 12px; margin-top: 4px; }
@@ -828,11 +843,21 @@
   .btn-muted { background: var(--bg-muted); color: var(--text-dis); }
   .btn-muted:hover { background: var(--bg-muted); }
 
-  /* ── START CHECK MODALS (smoobu-design-v1: --shadow, --r-16, spacing scale 4/8/12/16/24/32) ── */
-  .startcheck-modal { width: 760px; max-width: calc(100vw - var(--space-32)); background: var(--bg); border-radius: var(--r-16); box-shadow: var(--shadow); padding: var(--space-24); }
-  /* Address verification: header + footer fixed; property list scrolls within viewport */
+  /* ── START CHECK MODALS ── */
+  .startcheck-modal {
+    width: 50%;
+    min-width: 800px;
+    max-width: 900px;
+    background: var(--bg);
+    border-radius: 24px;
+    box-shadow: 0 6px 12px rgba(0,0,0,0.1);
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+  }
   #start-check-overlay {
-    padding: var(--space-24);
+    padding: 24px;
     box-sizing: border-box;
     overflow-y: auto;
     -webkit-overflow-scrolling: touch;
@@ -844,82 +869,176 @@
     min-height: 0;
     overflow: hidden;
   }
-  .startcheck-title { font-size: 36px; margin-bottom: 8px; }
-  .startcheck-sub { color: var(--text-2); margin-bottom: 16px; }
-  .startcheck-list { display: flex; flex-direction: column; gap: var(--space-12); margin-bottom: var(--space-16); }
+  .startcheck-sub { font: 500 16px/23px var(--font); color: var(--text); margin-bottom: 0; }
+  .startcheck-list { display: flex; flex-direction: column; gap: 16px; }
   #start-check-overlay .startcheck-list {
     flex: 1 1 auto;
     min-height: 0;
-    margin-bottom: 0;
     overflow-y: auto;
     overflow-x: hidden;
     scrollbar-gutter: stable;
-    padding-right: var(--space-4);
+    padding-right: 4px;
   }
-  .startcheck-item { display: flex; flex-direction: column; align-items: stretch; padding: 16px; border-radius: var(--r-16); background: var(--bg-muted); border: 1px solid var(--border); }
+  .startcheck-item { display: flex; flex-direction: column; align-items: stretch; padding: 24px 32px; border-radius: 16px; background: var(--bg-muted); border: none; transition: box-shadow 0.25s ease, border-color 0.25s ease; }
+  .startcheck-item.expanded { border: 1px solid var(--border); box-shadow: 0 0 16px rgba(52,58,63,0.13); overflow: visible; }
+  .startcheck-expanded { animation: expandCard 0.3s ease-out; }
+  @keyframes expandCard { from { opacity: 0; transform: translateY(-8px); } to { opacity: 1; transform: translateY(0); } }
   .startcheck-item .left { display: flex; align-items: center; gap: 12px; }
-  .startcheck-item .home { width: 24px; height: 24px; border-radius: 999px; background: #e5e9ef; display: flex; align-items: center; justify-content: center; color: var(--text-dis); font-size: 12px; }
-  .startcheck-item .name { font-weight: 600; color: var(--text); }
-  .startcheck-item .hint { font-size: 12px; }
-  .startcheck-close { background: transparent; border: none; color: var(--text-dis); font-size: 22px; cursor: pointer; line-height: 1; }
-  .startcheck-close:focus-visible { outline: none; box-shadow: 0 0 0 2px var(--focus); border-radius: var(--r-4); }
-  .startcheck-top { display: flex; justify-content: space-between; align-items: flex-start; gap: var(--space-12); flex-shrink: 0; }
+  .startcheck-item .home-icon { width: 52px; height: 64px; border-radius: 5px; background: #f0f4f6; display: flex; align-items: center; justify-content: center; color: var(--text-dis); flex-shrink: 0; }
+  .startcheck-item .home-icon svg { width: 24px; height: 24px; }
+  .startcheck-item .prop-info { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 4px; }
+  .startcheck-item .name { font: 600 16px/20px var(--font); color: var(--text); }
+  .startcheck-item .tag-required { display: inline-flex; align-items: center; padding: 4px; border-radius: 4px; background: #fff2a8; font: 600 12px/16px var(--font); color: #665702; align-self: flex-start; }
+  .startcheck-item .tag-done { display: inline-flex; align-items: center; padding: 2px 4px; border-radius: 4px; background: #d4edda; font: 600 12px/16px var(--font); color: #155724; }
+  .startcheck-item .addr-subtitle { font: 500 14px/20px var(--font); color: var(--text-dis); }
+  .startcheck-item .btn-add-addr.btn-edit-addr { background: var(--blue); }
+  .startcheck-item .btn-add-addr.btn-edit-addr:hover { background: var(--blue-dark); }
+  .startcheck-item .btn-add-addr { background: #21272a; color: white; border: none; height: 33px; padding: 4px 16px; border-radius: 32px; font: 600 14px/20px var(--font); cursor: pointer; flex-shrink: 0; }
+  .startcheck-item .btn-add-addr:hover { background: #343A3F; }
+  .startcheck-close { background: transparent; border: none; color: var(--text); cursor: pointer; line-height: 1; padding: 8px; border-radius: 8px; transition: background 0.15s, color 0.15s; display: flex; align-items: center; justify-content: center; }
+  .startcheck-close:hover { background: var(--bg-muted); color: var(--text); }
+  .startcheck-close:active { background: #dde1e6; }
+  .startcheck-close:focus-visible { outline: none; box-shadow: 0 0 0 2px var(--focus); border-radius: 8px; }
+  .startcheck-top { display: flex; justify-content: space-between; align-items: flex-start; gap: 12px; flex-shrink: 0; }
+  .startcheck-top h2 { font: 600 22px/28px var(--font); margin: 0; color: var(--text); }
   #start-check-overlay .startcheck-footer {
     flex-shrink: 0;
-    margin-top: var(--space-16);
+    margin-top: 0;
   }
-  .startcheck-footer { display: flex; justify-content: flex-end; border-top: 1px solid var(--border); padding-top: var(--space-12); }
-  .setup-step-label { font-size: 11px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: var(--text-dis); margin-bottom: 8px; }
+  .startcheck-footer { display: flex; justify-content: flex-end; }
+  .startcheck-footer .btn-start-check {
+    background: var(--bg-muted);
+    color: #6d757d;
+    border: none;
+    height: 40px;
+    padding: 0 24px;
+    border-radius: 32px;
+    font: 600 16px/23px var(--font);
+    cursor: pointer;
+  }
+  .startcheck-footer .btn-start-check.active { background: #21272a; color: white; cursor: pointer; }
+  .startcheck-footer .btn-start-check.active:hover { background: #343A3F; }
+  .startcheck-footer { position: relative; }
+  .startcheck-footer .btn-start-check:not(.active) { cursor: not-allowed; position: relative; }
+  .btn-start-check-wrap { position: relative; display: inline-flex; }
+  .btn-start-check-wrap .sc-tooltip { visibility: hidden; opacity: 0; position: absolute; bottom: calc(100% + 8px); right: 0; background: #21272a; color: white; font: 500 13px/18px var(--font); padding: 8px 12px; border-radius: 8px; white-space: nowrap; pointer-events: none; transition: opacity 0.15s, visibility 0.15s; z-index: 10; }
+  .btn-start-check-wrap .sc-tooltip::after { content: ''; position: absolute; top: 100%; right: 24px; border: 6px solid transparent; border-top-color: #21272a; }
+  .btn-start-check-wrap:hover .sc-tooltip:not(.hidden) { visibility: visible; opacity: 1; }
+  .setup-step-label { display: none; }
   .startcheck-row { display: flex; align-items: center; justify-content: space-between; gap: 12px; width: 100%; }
-  .startcheck-expanded { width: 100%; padding-top: 4px; }
-  .startcheck-expanded .exp-title { font-size: 16px; font-weight: 700; margin-bottom: 12px; color: var(--text); }
+  .startcheck-expanded { width: 100%; padding-top: 16px; border-top: 1px solid var(--border); margin-top: 16px; }
+  .startcheck-expanded .exp-title { font: 600 16px/20px var(--font); margin-bottom: 16px; color: var(--text); }
   .hint-required { color: #665702; font-weight: 600; }
   .hint-done { color: var(--green-dark); font-weight: 600; }
   .btn-review-back { display: inline-flex; align-items: center; gap: 8px; }
 
-  .address-editor { width: 760px; background: var(--bg); border-radius: var(--r-16); box-shadow: var(--shadow); padding: 24px; }
-  .address-panel { margin-top: 12px; border: 1px solid var(--border); border-radius: var(--r-16); padding: 16px; background: var(--bg-muted); }
-  .address-grid { display: grid; grid-template-columns: 1.4fr 1fr; gap: 16px; margin-top: 12px; }
-  .address-map { border-radius: var(--r-8); min-height: 236px; border: 1px solid var(--border); overflow: hidden; }
+  .address-editor { width: 50%; min-width: 480px; max-width: 900px; background: var(--bg); border-radius: 24px; box-shadow: 0 6px 12px rgba(0,0,0,0.1); padding: 24px; }
+  .address-panel { margin-top: 0; border: none; border-radius: 0; padding: 0; background: transparent; }
+  .address-grid { display: grid; grid-template-columns: 1fr 300px; gap: 24px; margin-top: 0; }
+  .address-fields { display: flex; flex-direction: column; gap: 16px; }
+  .address-fields .field-group { display: flex; flex-direction: column; gap: 4px; }
+  .address-fields .field-group label { font: 500 14px/20px var(--font); color: var(--text); }
+  .address-fields .field-group input,
+  .address-fields .field-group select { height: 48px; padding: 0 16px; border: 1px solid var(--border); border-radius: 8px; font: 500 16px/23px var(--font); color: var(--text); background: white; outline: none; box-sizing: border-box; width: 100%; }
+  .address-fields .field-group input::placeholder { color: #6d757d; }
+  .address-fields .field-group input:focus,
+  .address-fields .field-group select:focus { border-color: #0f62fe; box-shadow: 0 0 0 2px #669afe; }
+  .address-fields .field-row { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; }
+  .address-map { border-radius: 16px; min-height: 300px; border: none; overflow: hidden; }
   .coord-row { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 8px; }
   .coord-note { margin-top: 8px; font-size: 12px; color: var(--text-dis); }
-  .address-actions { display: flex; justify-content: flex-end; gap: 12px; margin-top: 16px; }
-  .review-modal { width: 760px; background: var(--bg); border-radius: var(--r-16); box-shadow: var(--shadow); padding: 24px; }
-  .review-card { margin-top: 12px; border: 1px solid var(--border); border-radius: var(--r-16); padding: 16px; background: var(--bg-muted); }
-  .review-card > .review-card-heading { font-weight: 700; font-size: 14px; margin-bottom: 12px; color: var(--text); }
-  .review-row { padding: 8px 0; border-bottom: 1px solid var(--border); }
+  .address-actions { display: flex; justify-content: flex-end; gap: 16px; margin-top: 16px; border-top: 1px solid var(--border); padding-top: 16px; }
+  .address-actions .btn-discard { background: transparent; border: 1px solid #21272a; color: #21272a; height: 40px; padding: 0 24px; border-radius: 32px; font: 600 14px/20px var(--font); cursor: pointer; }
+  .address-actions .btn-discard:hover { background: var(--bg-muted); }
+  .address-actions .btn-save-addr { background: #21272a; color: white; border: none; height: 40px; padding: 0 24px; border-radius: 32px; font: 600 14px/20px var(--font); cursor: pointer; }
+  .address-actions .btn-save-addr:hover { background: #343A3F; }
+  .address-fields .field-group input.field-error,
+  .address-fields .field-group select.field-error { border-color: #da1e28; }
+  .address-fields .field-group .field-error-msg { font: 500 12px/16px var(--font); color: #da1e28; margin-top: 2px; }
+  .address-fields .field-group { position: relative; }
+  .addr-autocomplete { position: absolute; top: 100%; left: 0; right: 0; background: white; border: 1px solid var(--border); border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.12); z-index: 20; max-height: 200px; overflow-y: auto; display: none; }
+  .addr-autocomplete.visible { display: block; }
+  .addr-autocomplete .ac-item { padding: 10px 16px; font: 500 14px/20px var(--font); color: var(--text); cursor: pointer; display: flex; align-items: center; gap: 8px; }
+  .addr-autocomplete .ac-item:hover { background: var(--bg-muted); }
+  .addr-autocomplete .ac-item svg { width: 16px; height: 16px; color: var(--text-dis); flex-shrink: 0; }
+  @media (max-width: 768px) {
+    .startcheck-modal { width: calc(100vw - 48px) !important; min-width: 0; }
+    .address-grid { grid-template-columns: 1fr; }
+    .address-fields .field-row { grid-template-columns: 1fr; }
+  }
+  .edit-addr-modal { width: 50%; min-width: 800px; max-width: 900px; background: var(--bg); border-radius: 24px; box-shadow: 0 6px 12px rgba(0,0,0,0.1); padding: 24px; display: flex; flex-direction: column; gap: 24px; }
+  #edit-address-overlay .startcheck-top h2 { font: 600 22px/28px var(--font); margin: 0; color: var(--text); }
+  .edit-addr-modal .address-grid { margin-top: 0; }
+  .edit-addr-modal .address-map { min-height: 384px; }
+  .edit-addr-modal .address-actions { border-top: none; margin-top: 0; padding-top: 0; }
+  .edit-addr-modal .address-actions .btn-discard { font: 600 16px/23px var(--font); }
+  .edit-addr-modal .address-actions .btn-save-addr { font: 600 16px/23px var(--font); }
+  .edit-addr-modal .coord-expand { display: flex; align-items: center; justify-content: space-between; padding: 16px; background: var(--bg-muted); border-radius: 16px; cursor: pointer; }
+  .edit-addr-modal .coord-expand-label { display: flex; align-items: center; gap: 10px; font: 500 14px/20px var(--font); color: var(--text); }
+  .edit-addr-modal .coord-expand-label .optional-tag { font: 500 12px/16px var(--font); }
+  .edit-addr-modal .coord-expand svg { width: 24px; height: 24px; transition: transform 0.2s; }
+  .edit-addr-modal .coord-expand.open svg { transform: rotate(180deg); }
+  .review-modal { width: 50%; min-width: 800px; max-width: 900px; background: var(--bg); border-radius: 24px; box-shadow: 0 6px 12px rgba(0,0,0,0.1); padding: 24px; display: flex; flex-direction: column; gap: 24px; }
+  .review-card { border: none; border-radius: 16px; padding: 24px; background: var(--bg-muted); display: flex; flex-direction: column; gap: 16px; }
+  .review-card > .review-card-heading { font: 600 20px/24px var(--font); margin-bottom: 0; color: var(--text); }
+  .review-card-inner { display: flex; gap: 16px; align-items: stretch; }
+  .review-card-inner > div:first-child { flex: 1; display: flex; flex-direction: column; justify-content: center; }
+  .review-row { padding: 8px 0; border-bottom: 1px solid var(--border); display: flex; flex-direction: column; gap: 4px; }
   .review-row:last-child { border-bottom: none; }
-  .review-footnote { font-size: 12px; color: var(--text-2); margin-top: 16px; padding-top: 12px; border-top: 1px solid var(--border); line-height: 1.5; }
-  #review-confirm-overlay .startcheck-top h2 { font: 600 20px/28px var(--font); margin: 0 0 8px; color: var(--text); }
+  .review-row .review-row-name { font: 600 16px/20px var(--font); color: var(--text); }
+  .review-row .review-row-addr { font: 500 14px/20px var(--font); color: var(--text); }
+  .review-footnote { font: 500 14px/20px var(--font); color: var(--text); border-top: 1px solid var(--border); padding-top: 16px; margin: 0; }
+  #review-confirm-overlay .startcheck-top h2 { font: 600 22px/28px var(--font); margin: 0; color: var(--text); }
+  #review-confirm-overlay .startcheck-top { margin-bottom: 0; }
+  .review-consent { display: flex; align-items: center; gap: 8px; font: 500 16px/23px var(--font); color: var(--text); cursor: pointer; }
+  .review-consent input[type="checkbox"] { width: 20px; height: 20px; accent-color: #21272a; cursor: pointer; }
+  .review-actions { display: flex; align-items: center; justify-content: space-between; }
+  .review-actions .btn-review-back { background: transparent; border: 1px solid #21272a; color: #21272a; height: 40px; padding: 0 24px; border-radius: 32px; font: 600 16px/23px var(--font); cursor: pointer; display: inline-flex; align-items: center; gap: 8px; }
+  .review-actions .btn-review-back:hover { background: var(--bg-muted); }
+  .review-actions .btn-review-back svg { width: 20px; height: 20px; }
+  .review-actions .btn-confirm { background: #21272a; color: white; border: none; height: 40px; padding: 0 24px; border-radius: 32px; font: 600 16px/23px var(--font); cursor: pointer; }
+  .review-actions .btn-confirm:hover:not(:disabled) { background: #343A3F; }
+  .review-actions .btn-confirm:disabled { background: var(--bg-muted); color: #6d757d; cursor: not-allowed; }
+  .btn-confirm-wrap { position: relative; display: inline-flex; }
+  .btn-confirm-wrap .rc-tooltip { visibility: hidden; opacity: 0; position: absolute; bottom: calc(100% + 8px); right: 0; background: #21272a; color: white; font: 500 13px/18px var(--font); padding: 8px 12px; border-radius: 8px; white-space: nowrap; pointer-events: none; transition: opacity 0.15s, visibility 0.15s; z-index: 10; }
+  .btn-confirm-wrap .rc-tooltip::after { content: ''; position: absolute; top: 100%; right: 24px; border: 6px solid transparent; border-top-color: #21272a; }
+  .btn-confirm-wrap:hover .rc-tooltip:not(.hidden) { visibility: visible; opacity: 1; }
   .review-illus {
     min-width: 0;
-    align-self: start;
-    border-radius: var(--r-8);
-    background: var(--bg);
-    border: 1px solid var(--border);
+    min-height: 150px;
+    align-self: stretch;
     display: flex;
-    align-items: center;
+    align-items: flex-end;
     justify-content: center;
-    padding: 12px;
-    overflow: hidden;
-    box-sizing: border-box;
+    flex-shrink: 0;
   }
   .review-illus img {
-    width: 100%;
-    height: auto;
-    max-height: 152px;
+    width: auto;
+    max-width: 330px;
+    height: 100%;
+    max-height: 100%;
     display: block;
     object-fit: contain;
+    object-position: bottom;
   }
-  .review-consent { display: flex; align-items: flex-start; gap: 8px; margin-top: 16px; font: 500 14px/20px var(--font); color: var(--text-2); }
-  .review-consent input { margin-top: 4px; accent-color: var(--blue); }
-  .review-actions { display: flex; justify-content: space-between; gap: 12px; margin-top: 16px; border-top: 1px solid var(--border); padding-top: 12px; }
+  
   .lobby-note { margin-bottom: 16px; padding: 8px 12px; border-radius: 8px; background: var(--amber-bg); color: var(--amber-text); font-size: 12px; display: none; }
   .lobby-note.show { display: block; }
 
-  .activate-strategy-modal { max-width: 640px; width: calc(100vw - 32px - 16px); overflow: visible; }
-  .activate-fields-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; margin-top: 16px; }
+  .activate-strategy-modal { width: 50%; min-width: 800px; max-width: 900px; overflow: visible; border-radius: 24px; padding: 24px; box-shadow: 0 6px 12px rgba(0,0,0,0.1); display: flex; flex-direction: column; gap: 24px; background: var(--bg); }
+  .activate-fields-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; }
   @media (max-width: 720px) { .activate-fields-grid { grid-template-columns: 1fr; } }
+  .activate-field-group { display: flex; flex-direction: column; gap: 4px; }
+  .activate-field-group .label { font: 500 14px/20px var(--font); color: var(--text); display: flex; align-items: center; gap: 4px; margin: 0; }
+  .activate-field-group .label .label-hint-icon { flex-shrink: 0; width: 16px; height: 16px; color: var(--text-dis); cursor: help; position: relative; }
+  .activate-field-group .input,
+  .activate-field-group .select { height: 48px; border-radius: 8px; border: 1px solid var(--border); padding: 12px; font: 600 16px/23px var(--font); color: var(--text); background: white; box-sizing: border-box; width: 100%; }
+  .activate-field-group .input::placeholder { font-weight: 500; color: var(--text-dis); }
+  .activate-field-group .select { appearance: none; -webkit-appearance: none; background-image: url("data:image/svg+xml,%3Csvg width='12' height='8' viewBox='0 0 12 8' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 1.5L6 6.5L11 1.5' stroke='%2321272A' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 12px center; padding-right: 36px; cursor: pointer; }
+  .activate-field-group .field-error { font: 500 12px/16px var(--font); color: #da1e28; margin: 4px 0 0; display: none; }
+  .activate-field-group .field-error.show { display: block; }
+  .activate-field-group .input.has-error,
+  .activate-field-group .select.has-error { border-color: #da1e28; }
   /* Info hints — visible tooltip bubble (native title is slow/unreliable); DS colors */
   .label-hint {
     cursor: help;
@@ -974,58 +1093,53 @@
     box-shadow: 0 0 0 2px var(--focus);
     border-radius: var(--r-4);
   }
-  /* Activate SDP modal — match Advanced Settings inline ⓘ (size + semantic grey) */
-  .activate-strategy-modal .label .label-hint,
-  .activate-strategy-modal .activate-section-label .label-hint {
-    font-size: 12px;
-    color: var(--text-dis);
-    vertical-align: middle;
-    margin-left: 4px;
-  }
-  .activate-section-label { font: 600 14px/20px var(--font); color: var(--text); margin: 24px 0 8px; }
-  .activate-method-cards { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 4px; }
+
+  .activate-section-label { font: 600 20px/24px var(--font); color: var(--text); margin: 0; }
+  .activate-method-cards { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
   .pm-card {
-    display: flex; align-items: flex-start; gap: 12px; text-align: left;
-    padding: 16px; border-radius: var(--r-16); border: 1px solid var(--border);
-    background: var(--bg); cursor: pointer; font-family: var(--font); transition: border-color 0.12s ease, background-color 0.12s ease;
-    min-height: 112px;
+    display: flex; align-items: center; gap: 16px; text-align: left;
+    padding: 24px 32px; border-radius: 16px; border: 2px solid var(--border);
+    background: var(--bg); cursor: pointer; font-family: var(--font); transition: border-color 0.12s ease, background-color 0.12s ease, box-shadow 0.12s ease;
   }
   .pm-card:hover { border-color: var(--gray-300); }
   .pm-card:focus-visible {
     outline: none;
     box-shadow: 0 0 0 2px #669afe;
   }
-  /* Selected = Web DS Color button fill (#0F62FE) */
   .pm-card.selected {
     background: #0f62fe;
-    border-color: #0f62fe;
+    border-color: #d0e2ff;
     color: #fff;
+    box-shadow: 0 0 8px rgba(52,58,63,0.13);
   }
   .pm-card.selected .pm-desc { color: rgba(255, 255, 255, 0.92); }
-  .pm-card.selected .pm-icon { color: #fff; stroke: #fff; }
+  .pm-card.selected .pm-icon { color: #fff; }
   .pm-card:not(.selected) .pm-title { color: var(--text); }
   .pm-card:not(.selected) .pm-desc { color: var(--text-dis); }
-  .pm-icon { flex-shrink: 0; width: 24px; height: 24px; color: var(--text-dis); stroke: currentColor; }
-  .pm-card.selected .pm-icon { color: #fff; stroke: #fff; }
-  .pm-emoji { flex-shrink: 0; width: 24px; height: 24px; font-size: 20px; line-height: 24px; text-align: center; }
-  .pm-body { min-width: 0; }
-  .pm-title { display: block; font: 600 14px/20px var(--font); margin-bottom: 8px; color: inherit; }
+  .pm-icon { flex-shrink: 0; width: 40px; height: 40px; }
+  .pm-body { min-width: 0; display: flex; flex-direction: column; gap: 4px; }
+  .pm-title { display: block; font: 600 16px/20px var(--font); color: inherit; }
   .pm-desc { display: block; font: 500 12px/16px var(--font); margin: 0; }
+  .activate-pricing-method-section { display: flex; flex-direction: column; gap: 16px; }
   .activate-context-box {
-    margin-top: 16px; padding: 16px; border-radius: var(--r-16);
-    background: var(--bg-muted); border: 1px solid var(--border);
-    font-size: 14px; color: var(--text); line-height: 1.5;
+    padding: 32px 24px; border-radius: 16px;
+    background: #f2f5fa; border: 1px solid var(--border);
+    color: var(--text);
   }
   #activate-custom-base-block { margin-bottom: 16px; }
-  .activate-context-lead { margin: 0 0 8px; font: 500 16px/24px var(--font); color: var(--text); }
+  .activate-context-lead { margin: 0; font: 600 16px/20px var(--font); color: var(--text); display: flex; align-items: center; gap: 4px; flex-wrap: wrap; }
   .activate-context-lead .act-aggression-select {
-    font: inherit; font-weight: 700; color: var(--blue); border: none; background: transparent;
-    text-decoration: underline; text-underline-offset: 4px; cursor: pointer; padding: 0 4px;
-    max-width: 160px; vertical-align: baseline;
+    font: 600 16px/20px var(--font); color: var(--text); border: none; border-bottom: 1px solid var(--text); background: transparent;
+    cursor: pointer; padding: 0 4px; appearance: none; -webkit-appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg width='10' height='6' viewBox='0 0 10 6' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 1L5 5L9 1' stroke='%2321272A' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 2px center; padding-right: 18px;
+    min-width: 130px;
   }
-  .activate-context-box .act-aggression-select { color: var(--blue); }
-  .activate-context-hint { margin: 0; font: 500 14px/20px var(--font); color: var(--text-2); }
-  .activate-actions { display: flex; gap: 12px; justify-content: flex-end; margin-top: 24px; flex-wrap: wrap; }
+  .activate-context-hint { margin: 4px 0 0; font: 500 16px/23px var(--font); color: var(--text); }
+  .activate-actions { display: flex; gap: 8px; justify-content: flex-end; flex-wrap: wrap; }
+  .btn-act-discard { display: inline-flex; align-items: center; justify-content: center; height: 40px; padding: 0 24px; border-radius: 32px; border: 1px solid var(--text); background: transparent; color: var(--text); font: 600 16px/23px var(--font); cursor: pointer; transition: background 0.12s; }
+  .btn-act-discard:hover { background: rgba(0,0,0,0.04); }
+  .btn-act-activate { display: inline-flex; align-items: center; justify-content: center; height: 40px; padding: 0 24px; border-radius: 32px; border: none; background: #21272a; color: white; font: 600 16px/23px var(--font); cursor: pointer; transition: background 0.12s; }
+  .btn-act-activate:hover { background: #343a3f; }
   .activate-success-modal { position: relative; text-align: center; padding: 32px 24px 24px; max-width: 440px; }
   .activate-success-hero { position: relative; margin: 32px auto 24px; max-width: 320px; }
   .activate-success-art-wrap { position: relative; border-radius: var(--r-16); background: var(--bg-muted); overflow: hidden; }
@@ -1161,10 +1275,7 @@
     padding-top: 8px;
     border-top: 1px solid var(--gray-100);
   }
-  .review-card-inner { display: grid; grid-template-columns: 1fr minmax(160px, 200px); gap: 16px; align-items: start; }
-  @media (max-width: 640px) { .review-card-inner { grid-template-columns: 1fr; } }
-  .review-name { font-weight: 600; font-size: 14px; color: var(--text); }
-  .review-loc { font-size: 12px; color: var(--text-dis); margin-top: 4px; }
+  @media (max-width: 640px) { .review-card-inner { flex-direction: column; } }
   @media (max-width: 900px) {
     .landing-hero-v2 { grid-template-columns: 1fr; gap: 32px; }
     .landing-hero-img { justify-self: center; max-width: 100%; }
@@ -1201,7 +1312,7 @@
   }
   .lobby-title-row { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
   .lobby-settings-wrap { position: relative; display: inline-flex; align-items: center; vertical-align: middle; }
-  .lobby-settings-btn { display: inline-flex; align-items: center; justify-content: center; width: 36px; height: 36px; margin: 0; padding: 0; border: none; border-radius: 999px; background: var(--gray-100); color: var(--text-2); cursor: pointer; }
+  .lobby-settings-btn { display: inline-flex; align-items: center; justify-content: center; width: 36px; height: 36px; margin: 0; padding: 0; border: none; border-radius: 999px; background: transparent; color: var(--text-2); cursor: pointer; }
   .lobby-settings-btn:hover { background: var(--gray-200); color: var(--text); }
   .lobby-settings-btn:focus-visible { outline: none; box-shadow: 0 0 0 2px #669afe; }
   .lobby-settings-btn[aria-expanded="true"] { background: var(--gray-200); color: var(--text); }
@@ -1884,9 +1995,8 @@
             </div>
           </div>
           <!-- Banner stack: checking (amber) → then success (green) -->
-          <div class="lobby-checking-banner hidden" id="lobby-checking-banner" role="status" aria-live="polite" tabindex="-1">We're checking your property locations. This can take some time — we'll notify you by email when it's ready.</div>
+          <div class="lobby-checking-banner hidden" id="lobby-checking-banner" role="status" aria-live="polite" tabindex="-1">We're checking your property locations. This can take some time — we'll notify you when it's ready.</div>
           <div class="lobby-success-banner hidden" id="lobby-success-banner">We have received the information regarding dynamic pricing. You can continue activation for each property.</div>
-          <h3 style="font-size:14px;font-weight:600;margin-bottom:16px">My rentals</h3>
           <div id="lobby-rentals"></div>
           <p id="lobby-phase-demo" class="hidden" style="font-size:12px;color:var(--text-dis);margin-top:16px">Prototype: <button type="button" class="addr-edit" onclick="advanceLobbyToReady()">Simulate checks complete (show success banner + enable actions)</button></p>
         </div>
@@ -2384,16 +2494,20 @@
 <div class="wh-overlay" id="start-check-overlay">
   <div class="startcheck-modal">
     <div class="startcheck-top">
-      <div>
-        <div class="setup-step-label">Setup — Step 1 of 2</div>
-        <h2 style="margin:0 0 8px">Get started with Dynamic Pricing</h2>
+      <div style="display:flex;flex-direction:column;gap:4px">
+        <h2>Get started with Dynamic Pricing</h2>
         <p class="startcheck-sub">Before we get started, we need to verify your property locations. Add an address to each property below.</p>
       </div>
-      <button type="button" class="startcheck-close" onclick="closeStartCheckModal()" aria-label="Close">×</button>
+      <button type="button" class="startcheck-close" onclick="closeStartCheckModal()" aria-label="Close">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
     </div>
     <div class="startcheck-list" id="start-check-list"></div>
     <div class="startcheck-footer">
-      <button type="button" id="start-check-btn" class="btn btn-primary btn-sm" onclick="startCheckFlow()" disabled>Continue to review</button>
+      <div class="btn-start-check-wrap">
+        <span class="sc-tooltip" id="sc-tooltip">You need to add at least 1 address in order to proceed</span>
+        <button type="button" id="start-check-btn" class="btn-start-check" onclick="startCheckFlow()">Start check</button>
+      </div>
     </div>
   </div>
 </div>
@@ -2401,116 +2515,157 @@
 <div class="wh-overlay" id="review-confirm-overlay">
   <div class="review-modal">
     <div class="startcheck-top">
-      <div>
-        <div class="setup-step-label">Setup — Step 2 of 2</div>
+      <div style="display:flex;flex-direction:column;gap:4px">
         <h2>Review and confirm</h2>
         <p class="startcheck-sub">Please review your property addresses. Once confirmed, we'll check if Dynamic Pricing is available in your area &mdash; this can take 30+ minutes, and we'll email you when it's done.</p>
       </div>
-      <button type="button" class="startcheck-close" onclick="closeReviewConfirmModal()" aria-label="Close">×</button>
+      <button type="button" class="startcheck-close" onclick="closeReviewConfirmModal()" aria-label="Close">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
     </div>
-      <div class="review-card">
+    <div class="review-card">
       <div class="review-card-heading" id="review-card-heading">Review properties</div>
       <div class="review-card-inner">
         <div id="review-confirm-list"></div>
         <div class="review-illus">
           <img
             src="assets/review-step-illus.png"
-            width="320"
-            height="200"
+            width="330"
+            height="181"
             alt="Illustration: properties and market growth"
             loading="lazy"
           />
         </div>
       </div>
-      <div class="review-footnote">Once your 30-day free trial ends, you'll be charged €12,99/property per month to continue using Dynamic Pricing. See our T&amp;C (Annex B) for full details.</div>
+      <div class="review-footnote">Once your 30-day free trial ends, you'll be charged €12.99/property per month to continue using Dynamic Pricing. See our T&amp;C (Annex B) for full details.</div>
     </div>
     <label class="review-consent">
       <input type="checkbox" id="review-consent-checkbox" onchange="toggleReviewConsent(this.checked)">
-      <span>I've read and agree to the T&amp;Cs, including the one for Dynamic Pricing.</span>
+      <span>I've read and agree to the T&amp;C, including Annex B for Dynamic Pricing.</span>
     </label>
     <div class="review-actions">
-      <button type="button" class="btn btn-secondary btn-review-back" onclick="backToStartCheck()">‹ Back</button>
-      <button type="button" class="btn btn-primary btn-sm" id="review-confirm-btn" onclick="confirmAndContinue()" disabled>Confirm and continue</button>
+      <button type="button" class="btn-review-back" onclick="backToStartCheck()">
+        <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12.5 15L7.5 10L12.5 5"/></svg>
+        Back
+      </button>
+      <div class="btn-confirm-wrap">
+        <span class="rc-tooltip" id="rc-tooltip">Please accept the T&amp;C to continue</span>
+        <button type="button" class="btn-confirm" id="review-confirm-btn" onclick="confirmAndContinue()" disabled>Confirm and continue</button>
+      </div>
     </div>
+  </div>
+</div>
+
+<!-- ═══════ EDIT SINGLE ADDRESS (post–onboarding) ═══════ -->
+<div class="wh-overlay" id="edit-address-overlay">
+  <div class="edit-addr-modal">
+    <div class="startcheck-top">
+      <div style="display:flex;flex-direction:column;gap:4px">
+        <h2 id="edit-addr-title">Edit address for Property</h2>
+      </div>
+      <button type="button" class="startcheck-close" onclick="closeEditAddressModal()" aria-label="Close">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
+    </div>
+    <div id="edit-addr-body"></div>
   </div>
 </div>
 
 <!-- ═══════ ACTIVATE SDP — pricing strategy (post–address checks) ═══════ -->
 <div class="wh-overlay" id="activate-sdp-overlay" onclick="if(event.target===this) closeActivateSdpModal()">
-  <div class="review-modal activate-strategy-modal" onclick="event.stopPropagation()" role="dialog" aria-labelledby="activate-sdp-title">
-    <div class="startcheck-top">
-      <div>
-        <h2 id="activate-sdp-title" style="margin:0 0 8px;font-size:20px;font-weight:700">Set up your pricing strategy</h2>
-        <p class="startcheck-sub" style="margin:0">Define how your nightly rate is calculated.</p>
+  <div class="activate-strategy-modal" onclick="event.stopPropagation()" role="dialog" aria-labelledby="activate-sdp-title">
+    <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:16px">
+      <div style="display:flex;flex-direction:column;gap:4px">
+        <h2 id="activate-sdp-title" style="margin:0;font:600 22px/28px var(--font);color:var(--text)">Set up your pricing strategy</h2>
+        <p style="margin:0;font:500 16px/23px var(--font);color:var(--text)">Define how your nightly rate is calculated.</p>
       </div>
-      <button type="button" class="startcheck-close" onclick="closeActivateSdpModal()" aria-label="Close">×</button>
+      <button type="button" class="startcheck-close" onclick="closeActivateSdpModal()" aria-label="Close">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
     </div>
     <div class="activate-fields-grid">
-      <div>
-        <label class="label" for="act-min-price">Global minimum <span class="label-hint" title="Lowest nightly rate; SDP won’t go below this floor.">ⓘ</span></label>
-        <input type="number" class="input" id="act-min-price" min="0" step="1" placeholder="e.g. 75" />
+      <div class="activate-field-group">
+        <label class="label" for="act-min-price">Global Minimum
+          <svg class="label-hint-icon" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="7" stroke="currentColor" stroke-width="1.2"/><path d="M8 7v4" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/><circle cx="8" cy="5" r="0.7" fill="currentColor"/></svg>
+        </label>
+        <input type="number" class="input" id="act-min-price" min="0" step="1" placeholder="e.g. 75" oninput="clearActFieldError(this)" />
+        <p class="field-error" id="act-min-price-error">This field is required</p>
       </div>
-      <div>
-        <label class="label" for="act-currency">Currency <span class="label-hint" title="Currency for this property in Smoobu.">ⓘ</span></label>
-        <select class="select" id="act-currency" style="width:100%">
-          <option value="EUR">Euro (€)</option>
-          <option value="USD">US Dollar ($)</option>
-          <option value="GBP">British Pound (£)</option>
-          <option value="CHF">Swiss Franc (CHF)</option>
+      <div class="activate-field-group">
+        <label class="label" for="act-currency">Currency
+          <svg class="label-hint-icon" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="7" stroke="currentColor" stroke-width="1.2"/><path d="M8 7v4" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/><circle cx="8" cy="5" r="0.7" fill="currentColor"/></svg>
+        </label>
+        <select class="select" id="act-currency" onchange="clearActFieldError(this)">
+          <option value="EUR">Euro</option>
+          <option value="USD">US Dollar</option>
+          <option value="GBP">British Pound</option>
+          <option value="CHF">Swiss Franc</option>
         </select>
+        <p class="field-error" id="act-currency-error">This field is required</p>
       </div>
-      <div>
-        <label class="label" for="act-min-nights">Minimum nights stay <span class="label-hint" title="Shortest stay; synced with your rate to channels.">ⓘ</span></label>
-        <input type="number" class="input" id="act-min-nights" min="1" step="1" placeholder="e.g. 2" />
+      <div class="activate-field-group">
+        <label class="label" for="act-min-nights">Minimum nights stay
+          <svg class="label-hint-icon" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="7" stroke="currentColor" stroke-width="1.2"/><path d="M8 7v4" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/><circle cx="8" cy="5" r="0.7" fill="currentColor"/></svg>
+        </label>
+        <input type="number" class="input" id="act-min-nights" min="1" step="1" placeholder="e.g. 2" oninput="clearActFieldError(this)" />
+        <p class="field-error" id="act-min-nights-error">This field is required</p>
       </div>
     </div>
 
-    <p class="activate-section-label" style="display:flex;align-items:center;gap:8px;flex-wrap:wrap">Pricing method <span class="label-hint" title="Market-based rate or your own base—SDP adjusts either way.">ⓘ</span></p>
-    <div class="activate-method-cards" role="group" aria-label="Pricing method">
-      <button type="button" class="pm-card pm-card--data selected" id="pm-card-data" aria-pressed="true"
-        title="Suggested rates from live market data in your area."
-        onclick="setActivatePricingMethod('data')">
-        <span class="pm-emoji" aria-hidden="true">🎓</span>
-        <span class="pm-body">
-          <span class="pm-title">Data driven Pricing</span>
-          <span class="pm-desc">Automatically set using real-time supply and demand data from your area.</span>
-        </span>
-      </button>
-      <button type="button" class="pm-card pm-card--custom" id="pm-card-custom" aria-pressed="false"
-        title="You set the base nightly rate; SDP adjusts from there."
-        onclick="setActivatePricingMethod('custom')">
-        <svg class="pm-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" aria-hidden="true">
-          <line x1="6" y1="8" x2="6" y2="16"/><line x1="12" y1="5" x2="12" y2="19"/><line x1="18" y1="10" x2="18" y2="14"/>
-          <circle cx="6" cy="12" r="2"/><circle cx="12" cy="12" r="2"/><circle cx="18" cy="12" r="2"/>
-        </svg>
-        <span class="pm-body">
-          <span class="pm-title">Custom Base Price</span>
-          <span class="pm-desc">You set the starting rate. Dynamic pricing will adjust up or down from this value.</span>
-        </span>
-      </button>
-    </div>
-
-    <div id="activate-strategy-context" class="activate-context-box">
-      <div id="activate-custom-base-block" class="hidden">
-        <label class="label" for="act-custom-base">Your custom base price <span class="label-hint" title="Starting nightly price in rule-based mode. Dynamic Pricing adjusts it daily. Min/max limits stay separate.">ⓘ</span></label>
-        <input type="number" class="input" id="act-custom-base" min="0" step="1" placeholder="e.g. 145" style="max-width:200px;margin-top:8px" />
+    <hr style="border:none;border-top:1px solid var(--border);margin:0" />
+    <div class="activate-pricing-method-section">
+      <p class="activate-section-label">Pricing method</p>
+      <div class="activate-method-cards" role="group" aria-label="Pricing method">
+        <button type="button" class="pm-card pm-card--data selected" id="pm-card-data" aria-pressed="true"
+          onclick="setActivatePricingMethod('data')">
+          <svg class="pm-icon" viewBox="0 0 40 40" fill="none" aria-hidden="true">
+            <circle cx="20" cy="20" r="20" fill="currentColor" opacity="0.15"/>
+            <path d="M20 12c-4.42 0-8 1.79-8 4v8c0 2.21 3.58 4 8 4s8-1.79 8-4v-8c0-2.21-3.58-4-8-4z" stroke="currentColor" stroke-width="1.5" fill="none"/>
+            <path d="M12 16c0 2.21 3.58 4 8 4s8-1.79 8-4" stroke="currentColor" stroke-width="1.5" fill="none"/>
+            <path d="M12 20c0 2.21 3.58 4 8 4s8-1.79 8-4" stroke="currentColor" stroke-width="1.5" fill="none"/>
+          </svg>
+          <span class="pm-body">
+            <span class="pm-title">Data driven Pricing</span>
+            <span class="pm-desc">Automatically set using real-time supply and demand data from your area.</span>
+          </span>
+        </button>
+        <button type="button" class="pm-card pm-card--custom" id="pm-card-custom" aria-pressed="false"
+          onclick="setActivatePricingMethod('custom')">
+          <svg class="pm-icon" viewBox="0 0 40 40" fill="none" aria-hidden="true">
+            <circle cx="20" cy="20" r="20" fill="currentColor" opacity="0.08"/>
+            <path d="M14 26V18M20 26V14M26 26V20" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+          </svg>
+          <span class="pm-body">
+            <span class="pm-title">Custom Base Price</span>
+            <span class="pm-desc">You set the starting rate. Dynamic pricing will adjust up or down from this value.</span>
+          </span>
+        </button>
       </div>
-      <p class="activate-context-lead">
-        I want my price aggression to be in the
-        <select id="act-aggression" class="act-aggression-select" aria-label="Price aggression level"
-          title="Higher aggression reacts faster to demand swings.">
-          <option value="conservative">Conservative</option>
-          <option value="recommended" selected>Recommended</option>
-          <option value="aggressive">Aggressive</option>
-        </select>
-        level.
-      </p>
-      <p class="activate-context-hint" id="act-aggression-hint">Balances occupancy and revenue based on local market conditions.</p>
+
+      <div id="activate-strategy-context" class="activate-context-box">
+        <div id="activate-custom-base-block" class="hidden">
+          <div class="activate-field-group" style="margin-bottom:16px">
+            <label class="label" for="act-custom-base">Your custom base price</label>
+            <input type="number" class="input" id="act-custom-base" min="0" step="1" placeholder="e.g. 145" style="max-width:200px" oninput="clearActFieldError(this)" />
+            <p class="field-error" id="act-custom-base-error">This field is required</p>
+          </div>
+        </div>
+        <p class="activate-context-lead">
+          I want my price aggression to be in The
+          <select id="act-aggression" class="act-aggression-select" aria-label="Price aggression level">
+            <option value="conservative">Conservative</option>
+            <option value="recommended" selected>Recommended</option>
+            <option value="aggressive">Aggressive</option>
+          </select>
+          Level
+        </p>
+        <p class="activate-context-hint" id="act-aggression-hint">Balances occupancy and revenue based on local market conditions.</p>
+      </div>
     </div>
 
     <div class="activate-actions">
-      <button type="button" class="btn btn-outline" onclick="closeActivateSdpModal()">Discard</button>
-      <button type="button" class="btn btn-primary" onclick="submitActivateSdp()">Activate Dynamic pricing</button>
+      <button type="button" class="btn-act-discard" onclick="closeActivateSdpModal()">Discard</button>
+      <button type="button" class="btn-act-activate" onclick="submitActivateSdp()">Activate Dynamic pricing</button>
     </div>
   </div>
 </div>
@@ -2927,7 +3082,7 @@
   }
 
   const addressChecklist = [
-    { id: "beautiful-hut", name: "Beautiful flat in Wyckling", added: false, sdpActivated: false },
+    { id: "beautiful-hut", name: "Beautiful flat in Porto", added: false, sdpActivated: false },
     { id: "cabin-woods-1", name: "Sunrise Cabin", added: false, sdpActivated: false },
     { id: "cabin-woods-2", name: "Riverside Retreat", added: false, sdpActivated: false }
   ];
@@ -3146,27 +3301,28 @@
     }).join("");
   }
 
+  const LOBBY_EDIT_ICON = `<svg class="lobby-edit-icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9.5 3.5l3 3M2 11l-0.5 3.5 3.5-0.5 8.5-8.5-3-3L2 11z"/></svg>`;
+
   const LOBBY_DEFAULT_RENTALS_HTML = `
           <div class="lobby-property-card" data-pid="misty">
             <div class="lobby-card-text">
               <div class="lobby-card-title-row">
                 <span class="lobby-card-title">Misty Pines Retreat</span>
-                <span class="lobby-status-dot lobby-status-dot--on" title="Dynamic Pricing active." role="img" aria-label="Dynamic Pricing active."></span>
+                <span class="lobby-status-dot lobby-status-dot--amber" title="Finish activation to connect." role="img" aria-label="Finish activation to connect."></span>
               </div>
-              <div class="lobby-card-sub">Lake District, United Kingdom</div>
+              <div class="lobby-card-sub">Lake District, United Kingdom ${LOBBY_EDIT_ICON}</div>
             </div>
-            <button type="button" class="btn btn-primary btn-lobby" onclick="openPropertyPage('misty')">Go to settings</button>
+            <span class="btn-lobby btn-lobby-ghost">Activate</span>
           </div>
           <div class="lobby-property-card" data-property="other-place">
             <div class="lobby-card-text">
               <div class="lobby-card-title-row">
                 <span class="lobby-card-title">Other place</span>
                 <span class="lobby-status-dot lobby-status-dot--amber" title="Finish activation to connect." role="img" aria-label="Finish activation to connect."></span>
-                <span class="tag-out-of-market">Out of market</span>
               </div>
-              <div class="lobby-card-sub">Lake District, United Kingdom</div>
+              <div class="lobby-card-sub">Lake District, United Kingdom ${LOBBY_EDIT_ICON}</div>
             </div>
-            <button type="button" class="btn btn-primary btn-lobby" onclick="window.alert('Prototype: open property settings (out of market).')">Go to settings</button>
+            <span class="btn-lobby btn-lobby-ghost">Activate</span>
           </div>
           <div class="lobby-property-card" data-pid="misty-waiting">
             <div class="lobby-card-text">
@@ -3174,9 +3330,9 @@
                 <span class="lobby-card-title is-muted">Misty Pines Retreat</span>
                 <span class="lobby-status-dot lobby-status-dot--off" title="Add address to activate." role="img" aria-label="Add address to activate."></span>
               </div>
-              <div class="lobby-card-sub is-muted">Lake District, United Kingdom</div>
+              <div class="lobby-card-sub"><span class="lobby-tag lobby-tag--yellow">Address required</span></div>
             </div>
-            <button type="button" class="btn btn-color btn-lobby" onclick="openStartCheckModal()">Check eligibility</button>
+            <button type="button" class="btn btn-color btn-lobby" onclick="openStartCheckModal()">Add address</button>
           </div>`;
 
   const PROPERTY_CATALOG = {
@@ -3218,7 +3374,7 @@
     },
     /* Same IDs as addressChecklist — lobby “Go to settings” opens this rental without renaming to fantasy/misty */
     "beautiful-hut": {
-      name: "Beautiful flat in Wyckling",
+      name: "Beautiful flat in Porto",
       location: "",
       bpMode: "data",
       base: "172",
@@ -3631,6 +3787,9 @@
     if (item.sdpActivated === true) {
       return `<span class="lobby-status-dot lobby-status-dot--on" title="${LOBBY_DOT_TITLE_ON}" role="img" aria-label="${LOBBY_DOT_TITLE_ON}"></span>`;
     }
+    if (item.added && lobbyQualificationPhase === "ready") {
+      return `<span class="lobby-dot-wrap"><span class="lobby-status-dot lobby-status-dot--off"></span><span class="lobby-dot-tooltip">Deactivated</span></span>`;
+    }
     if (item.added) {
       return `<span class="lobby-status-dot lobby-status-dot--amber" title="${LOBBY_DOT_TITLE_AMBER}" role="img" aria-label="${LOBBY_DOT_TITLE_AMBER}"></span>`;
     }
@@ -3641,15 +3800,16 @@
     const addr = formatAddressLine(item);
     const routePid = item.id;
     const dot = lobbyStatusDotHtml(item);
+    const editIcon = `<span onclick="event.stopPropagation();openEditAddressModal('${item.id}')" style="cursor:pointer;display:inline-flex">${LOBBY_EDIT_ICON}</span>`;
     if (!item.added) {
       return `
           <div class="lobby-property-card" data-checklist-id="${item.id}">
             <div class="lobby-card-text">
               <div class="lobby-card-title-row">
-                <span class="lobby-card-title">${item.name}</span>
+                <span class="lobby-card-title is-muted">${item.name}</span>
                 ${dot}
               </div>
-              <div class="lobby-card-sub"><span class="lobby-addr-missing-highlight">Address missing</span></div>
+              <div class="lobby-card-sub"><span class="lobby-tag lobby-tag--yellow">Address required</span></div>
             </div>
             <button type="button" class="btn btn-color btn-lobby" onclick="openStartCheckModalFor('${item.id}')">Add address</button>
           </div>`;
@@ -3662,14 +3822,11 @@
                 <span class="lobby-card-title">${item.name}</span>
                 ${dot}
               </div>
-              <div class="lobby-card-sub">${addr}</div>
+              <div class="lobby-card-sub">${addr} ${editIcon}</div>
             </div>
-            <button type="button" class="btn btn-primary btn-lobby btn-activate-pending" disabled title="Eligibility check in progress">
-              <span class="lobby-action-lock" aria-hidden="true">🔒</span> Activate
-            </button>
+            <span class="btn-lobby btn-lobby-ghost">Activate</span>
           </div>`;
     }
-    /* Ready: property has address — show Activate until user completes pricing modal + success, then Go to settings */
     if (lobbyQualificationPhase === "ready" && !item.sdpActivated) {
       return `
           <div class="lobby-property-card" data-checklist-id="${item.id}">
@@ -3678,7 +3835,7 @@
                 <span class="lobby-card-title">${item.name}</span>
                 ${dot}
               </div>
-              <div class="lobby-card-sub">${addr}</div>
+              <div class="lobby-card-sub">${addr} ${editIcon}</div>
             </div>
             <button type="button" class="btn btn-color btn-lobby" onclick="openActivateSdpModal('${item.id}')">Activate</button>
           </div>`;
@@ -3689,10 +3846,11 @@
               <div class="lobby-card-title-row">
                 <span class="lobby-card-title">${item.name}</span>
                 ${dot}
+                <span class="lobby-tag lobby-tag--green">Connected</span>
               </div>
-              <div class="lobby-card-sub">${addr}</div>
+              <div class="lobby-card-sub">${addr} ${editIcon}</div>
             </div>
-            <button type="button" class="btn btn-primary btn-lobby" onclick="openPropertyPage('${routePid}')">Go to settings</button>
+            <button type="button" class="btn btn-lobby btn-lobby-dark" onclick="openPropertyPage('${routePid}')">Go to settings</button>
           </div>`;
   }
 
@@ -3709,6 +3867,10 @@
   }
 
   function openStartCheckModalFor(checklistId) {
+    if (addressesSubmitted) {
+      openEditAddressModal(checklistId);
+      return;
+    }
     openStartCheckModal();
     requestAnimationFrame(() => {
       openAddressPanel(checklistId);
@@ -3894,6 +4056,8 @@
     if (!PROPERTY_CATALOG[checklistId]) return;
     activateModalChecklistId = checklistId;
     hydrateActivateFormFromCatalog(checklistId);
+    document.querySelectorAll("#activate-sdp-overlay .field-error").forEach(e => e.classList.remove("show"));
+    document.querySelectorAll("#activate-sdp-overlay .has-error").forEach(e => e.classList.remove("has-error"));
     document.getElementById("activate-sdp-overlay")?.classList.add("open");
   }
 
@@ -3953,9 +4117,38 @@
     if (row) row.sdpActivated = true;
   }
 
+  function clearActFieldError(el) {
+    el.classList.remove("has-error");
+    const errEl = el.parentElement?.querySelector(".field-error");
+    if (errEl) errEl.classList.remove("show");
+  }
+
+  function showActFieldError(inputId, msg) {
+    const el = document.getElementById(inputId);
+    const errEl = document.getElementById(inputId + "-error");
+    if (el) el.classList.add("has-error");
+    if (errEl) { errEl.textContent = msg || "This field is required"; errEl.classList.add("show"); }
+  }
+
+  function validateActivateForm() {
+    let valid = true;
+    const minPrice = document.getElementById("act-min-price");
+    const currency = document.getElementById("act-currency");
+    const minNights = document.getElementById("act-min-nights");
+    const isCustom = document.getElementById("pm-card-custom")?.classList.contains("selected");
+    const customBase = document.getElementById("act-custom-base");
+
+    if (!minPrice?.value?.trim()) { showActFieldError("act-min-price"); valid = false; }
+    if (!currency?.value) { showActFieldError("act-currency"); valid = false; }
+    if (!minNights?.value?.trim()) { showActFieldError("act-min-nights"); valid = false; }
+    if (isCustom && !customBase?.value?.trim()) { showActFieldError("act-custom-base"); valid = false; }
+    return valid;
+  }
+
   function submitActivateSdp() {
     const pid = activateModalChecklistId;
     if (!pid || !PROPERTY_CATALOG[pid]) return;
+    if (!validateActivateForm()) return;
     applyActivationNumbersToCatalog(pid);
     markChecklistSdpActivated(pid);
     renderPricingCalendar();
@@ -4006,6 +4199,116 @@
     if (addressesSubmitted) renderLobbyRentals();
   }
 
+  let editAddrPropertyId = null;
+
+  function openEditAddressModal(propertyId) {
+    editAddrPropertyId = propertyId;
+    activeAddressProperty = propertyId;
+    const item = addressChecklist.find(i => i.id === propertyId);
+    if (!item) return;
+    const titleEl = document.getElementById("edit-addr-title");
+    titleEl.textContent = item.added ? `Edit address for ${item.name}` : `Add address for ${item.name}`;
+    const body = document.getElementById("edit-addr-body");
+    body.innerHTML = editAddressFormHtml();
+    document.getElementById("edit-address-overlay").classList.add("open");
+    if (item.added) {
+      if (item.line1) document.getElementById("ae-line1").value = item.line1;
+      if (item.line2) document.getElementById("ae-line2").value = item.line2;
+      if (item.postal) document.getElementById("ae-postal").value = item.postal;
+      if (item.city) document.getElementById("ae-city").value = item.city;
+      if (item.state) document.getElementById("ae-state").value = item.state;
+      if (item.country) {
+        const sel = document.getElementById("ae-country");
+        if (sel) sel.value = item.country;
+      }
+    }
+    const lat = item.lat || defaultCoordinates.lat;
+    const lng = item.lng || defaultCoordinates.lng;
+    setTimeout(() => {
+      initializeAddressMap(lat, lng);
+      setupAddressAutocomplete();
+    }, 100);
+  }
+
+  function closeEditAddressModal() {
+    destroyAddressMapIfAny();
+    if (acCleanup) { acCleanup(); acCleanup = null; }
+    editAddrPropertyId = null;
+    document.getElementById("edit-address-overlay").classList.remove("open");
+    renderLobbyRentals();
+  }
+
+  function saveEditAddress() {
+    if (!editAddrPropertyId) return;
+    const idx = addressChecklist.findIndex(i => i.id === editAddrPropertyId);
+    if (idx < 0) return;
+    if (!validateAddressFields()) return;
+    addressChecklist[idx].line1 = document.getElementById("ae-line1").value.trim();
+    addressChecklist[idx].line2 = document.getElementById("ae-line2").value.trim();
+    addressChecklist[idx].postal = document.getElementById("ae-postal").value.trim();
+    addressChecklist[idx].city = document.getElementById("ae-city").value.trim();
+    const stateEl = document.getElementById("ae-state");
+    addressChecklist[idx].state = stateEl ? stateEl.value.trim() : "";
+    const countryEl = document.getElementById("ae-country");
+    addressChecklist[idx].country = countryEl ? countryEl.value.trim() : "";
+    const lat = Number(document.getElementById("ae-lat").value);
+    const lng = Number(document.getElementById("ae-lng").value);
+    addressChecklist[idx].lat = Number.isFinite(lat) ? lat : defaultCoordinates.lat;
+    addressChecklist[idx].lng = Number.isFinite(lng) ? lng : defaultCoordinates.lng;
+    addressChecklist[idx].added = onboardingAddressFieldsComplete(addressChecklist[idx]);
+    syncChecklistItemToPropertyStore(addressChecklist[idx]);
+    closeEditAddressModal();
+  }
+
+  function editAddressFormHtml() {
+    return `
+      <div class="address-grid">
+        <div class="address-fields">
+          <div class="field-group">
+            <label for="ae-line1">Address</label>
+            <input id="ae-line1" name="ae-line1" placeholder="Address line 1" autocomplete="street-address" required>
+          </div>
+          <div class="field-group">
+            <input id="ae-line2" name="ae-line2" placeholder="Address line 2" autocomplete="address-line2">
+          </div>
+          <div class="field-row">
+            <div class="field-group">
+              <label for="ae-postal">Postal code</label>
+              <input id="ae-postal" name="ae-postal" placeholder="e.g 102352" autocomplete="postal-code" required>
+            </div>
+            <div class="field-group">
+              <label for="ae-city">City</label>
+              <input id="ae-city" name="ae-city" placeholder="e.g Berlin" autocomplete="address-level2" required>
+            </div>
+            <div class="field-group">
+              <label for="ae-state">State</label>
+              <input id="ae-state" name="ae-state" placeholder="Berlin" autocomplete="address-level1" required>
+            </div>
+          </div>
+          <div class="field-group">
+            <label for="ae-country">Country</label>
+            <select id="ae-country" name="ae-country" required>${getCountrySelectOptionsHtml()}</select>
+          </div>
+          <input type="hidden" id="ae-lat">
+          <input type="hidden" id="ae-lng">
+          <div class="coord-expand" onclick="this.classList.toggle('open');this.nextElementSibling.style.display=this.classList.contains('open')?'grid':'none'">
+            <div class="coord-expand-label">Longitude <span class="optional-tag">*Optional</span></div>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+          </div>
+          <div class="coord-row" style="display:none">
+            <div class="field-group"><label for="ae-lat">Latitude</label><input id="ae-lat" placeholder="e.g 52.520008" oninput="syncMarkerFromInputs()"></div>
+            <div class="field-group"><label for="ae-lng">Longitude</label><input id="ae-lng" placeholder="e.g 13.404954" oninput="syncMarkerFromInputs()"></div>
+          </div>
+        </div>
+        <div class="address-map" id="address-picker-map"></div>
+      </div>
+      <div class="address-actions">
+        <button type="button" class="btn-discard" onclick="closeEditAddressModal()">Discard</button>
+        <button type="button" class="btn-save-addr" onclick="saveEditAddress()">Save</button>
+      </div>
+    `;
+  }
+
   /** Onboarding address: all fields required except address line 2 (lat/lng optional). */
   function onboardingAddressFieldsComplete(row) {
     if (!row) return false;
@@ -4020,33 +4323,42 @@
 
   function addressFormHtml() {
     return `
-      <label class="label">Address</label>
-      <p style="font-size:12px;color:var(--text-dis);margin:-4px 0 12px;line-height:1.4">All fields marked <span style="color:var(--red);font-weight:700">*</span> are required. Address line 2 is optional.</p>
-      <label class="label" for="ae-line1">Address line 1 <span style="color:var(--red);font-weight:700">*</span></label>
-      <input class="input" id="ae-line1" name="ae-line1" placeholder="Address line 1" autocomplete="street-address" required style="margin-bottom:8px">
-      <label class="label" for="ae-line2">Address line 2 <span style="font-size:12px;font-weight:500;color:var(--text-dis)">(optional)</span></label>
-      <input class="input" id="ae-line2" name="ae-line2" placeholder="Address line 2" autocomplete="address-line2" style="margin-bottom:8px">
-      <div class="form-row form-row-3" style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px">
-        <div>
-          <label class="label" for="ae-postal" style="margin-bottom:4px;font-size:12px">Postal code <span style="color:var(--red)">*</span></label>
-          <input class="input" id="ae-postal" name="ae-postal" placeholder="Postal code" autocomplete="postal-code" required>
+      <div class="address-grid">
+        <div class="address-fields">
+          <div class="field-group">
+            <label for="ae-line1">Address</label>
+            <input id="ae-line1" name="ae-line1" placeholder="Address line 1" autocomplete="street-address" required>
+          </div>
+          <div class="field-group">
+            <input id="ae-line2" name="ae-line2" placeholder="Address line 2" autocomplete="address-line2">
+          </div>
+          <div class="field-row">
+            <div class="field-group">
+              <label for="ae-postal">Postal code</label>
+              <input id="ae-postal" name="ae-postal" placeholder="e.g 102352" autocomplete="postal-code" required>
+            </div>
+            <div class="field-group">
+              <label for="ae-city">City</label>
+              <input id="ae-city" name="ae-city" placeholder="e.g Berlin" autocomplete="address-level2" required>
+            </div>
+            <div class="field-group">
+              <label for="ae-state">State</label>
+              <input id="ae-state" name="ae-state" placeholder="Berlin" autocomplete="address-level1" required>
+            </div>
+          </div>
+          <div class="field-group">
+            <label for="ae-country">Country</label>
+            <select id="ae-country" name="ae-country" required>${getCountrySelectOptionsHtml()}</select>
+          </div>
+          <input type="hidden" id="ae-lat">
+          <input type="hidden" id="ae-lng">
         </div>
-        <div>
-          <label class="label" for="ae-city" style="margin-bottom:4px;font-size:12px">City <span style="color:var(--red)">*</span></label>
-          <input class="input" id="ae-city" name="ae-city" placeholder="City" autocomplete="address-level2" required>
-        </div>
-        <div>
-          <label class="label" for="ae-state" style="margin-bottom:4px;font-size:12px">State / region <span style="color:var(--red)">*</span></label>
-          <input class="input" id="ae-state" name="ae-state" placeholder="State / region" autocomplete="address-level1" required>
-        </div>
+        <div class="address-map" id="address-picker-map"></div>
       </div>
-      <label class="label" style="margin-top:8px" for="ae-country">Country <span style="color:var(--red);font-weight:700">*</span></label>
-      <select class="select" id="ae-country" name="ae-country" style="width:100%;max-width:280px" required>${getCountrySelectOptionsHtml()}</select>
-      <div class="coord-row">
-        <input class="input" id="ae-lat" placeholder="Latitude" onchange="syncMarkerFromInputs()">
-        <input class="input" id="ae-lng" placeholder="Longitude" onchange="syncMarkerFromInputs()">
+      <div class="address-actions">
+        <button type="button" class="btn-discard" onclick="discardAddressPanel()">Discard</button>
+        <button type="button" class="btn-save-addr" onclick="saveAddress()">Save</button>
       </div>
-      <div class="coord-note">Click on the map or drag the pin to set exact coordinates.</div>
     `;
   }
 
@@ -4056,49 +4368,170 @@
       item.added = onboardingAddressFieldsComplete(item);
     });
     const list = document.getElementById("start-check-list");
+    const homeIconSvg = `<svg viewBox="0 0 24 24" fill="none" stroke="#697077" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9.5L12 3l9 6.5V20a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V9.5z"/><path d="M9 22V12h6v10"/></svg>`;
     list.innerHTML = addressChecklist
       .map((item) => {
         const isExpanded = expandedChecklistId === item.id;
-        const hintClass = item.added ? "hint-done" : "hint-required";
-        const hintText = item.added ? "Address added" : "Address required";
         if (isExpanded) {
           return `
-      <div class="startcheck-item" data-id="${item.id}">
-        <div class="startcheck-expanded">
+      <div class="startcheck-item expanded" data-id="${item.id}">
+        <div class="startcheck-expanded" style="margin-top:0;border-top:none;padding-top:0">
           <div class="exp-title">${item.name}</div>
-          <div class="address-panel" style="margin:0">
-            <div class="address-grid">
-              <div>
-                ${addressFormHtml()}
-              </div>
-              <div class="address-map" id="address-picker-map"></div>
-            </div>
-            <div class="address-actions">
-              <button type="button" class="btn btn-secondary" onclick="discardAddressPanel()">Discard</button>
-              <button type="button" class="btn btn-primary btn-sm" onclick="saveAddress()">Save</button>
-            </div>
-          </div>
+          ${addressFormHtml()}
         </div>
       </div>`;
         }
+        let tagHtml;
+        if (item.added) {
+          const parts = [item.line1, item.city, item.country].filter(Boolean);
+          tagHtml = `<span class="addr-subtitle">${parts.join(', ')}</span>`;
+        } else {
+          tagHtml = `<span class="tag-required">Address required</span>`;
+        }
+        const btnLabel = item.added ? "Edit Address" : "Add Address";
+        const btnClass = item.added ? "btn-add-addr btn-edit-addr" : "btn-add-addr";
         return `
       <div class="startcheck-item" data-id="${item.id}">
         <div class="startcheck-row">
           <div class="left">
-            <div class="home">⌂</div>
-            <div>
+            <div class="home-icon">${homeIconSvg}</div>
+            <div class="prop-info">
               <div class="name">${item.name}</div>
-              <div class="hint ${hintClass}">${hintText}</div>
+              ${tagHtml}
             </div>
           </div>
-          <button type="button" class="btn btn-primary btn-sm rental-action" onclick="openAddressPanel('${item.id}')">${item.added ? "Edit Address" : "Add Address"}</button>
+          <button type="button" class="${btnClass}" onclick="openAddressPanel('${item.id}')">${btnLabel}</button>
         </div>
       </div>`;
       })
       .join("");
     const startBtn = document.getElementById("start-check-btn");
+    const tooltip = document.getElementById("sc-tooltip");
     const someAdded = addressChecklist.some((item) => item.added);
-    startBtn.disabled = !someAdded;
+    if (someAdded) {
+      startBtn.classList.add("active");
+      if (tooltip) tooltip.classList.add("hidden");
+    } else {
+      startBtn.classList.remove("active");
+      if (tooltip) tooltip.classList.remove("hidden");
+    }
+  }
+
+  const MOCK_ADDRESSES_BY_COUNTRY = {
+    "Portugal": [
+      { text: "Rua de Santa Catarina 112, Porto, Portugal", line1: "Rua de Santa Catarina 112", postal: "4000-442", city: "Porto", state: "Porto", country: "Portugal", lat: 41.1496, lng: -8.6050 },
+      { text: "Rua das Flores 25, Porto, Portugal", line1: "Rua das Flores 25", postal: "4050-262", city: "Porto", state: "Porto", country: "Portugal", lat: 41.1456, lng: -8.6147 },
+      { text: "Avenida dos Aliados 88, Porto, Portugal", line1: "Avenida dos Aliados 88", postal: "4000-066", city: "Porto", state: "Porto", country: "Portugal", lat: 41.1489, lng: -8.6107 },
+      { text: "Praça da Ribeira 3, Porto, Portugal", line1: "Praça da Ribeira 3", postal: "4050-513", city: "Porto", state: "Porto", country: "Portugal", lat: 41.1406, lng: -8.6132 },
+      { text: "Rua de Cedofeita 200, Porto, Portugal", line1: "Rua de Cedofeita 200", postal: "4050-181", city: "Porto", state: "Porto", country: "Portugal", lat: 41.1522, lng: -8.6195 }
+    ],
+    "Germany": [
+      { text: "Friedrichstraße 43, Berlin, Germany", line1: "Friedrichstraße 43", postal: "10117", city: "Berlin", state: "Berlin", country: "Germany", lat: 52.5200, lng: 13.3885 },
+      { text: "Marienplatz 8, Munich, Germany", line1: "Marienplatz 8", postal: "80331", city: "Munich", state: "Bavaria", country: "Germany", lat: 48.1374, lng: 11.5755 },
+      { text: "Reeperbahn 15, Hamburg, Germany", line1: "Reeperbahn 15", postal: "20359", city: "Hamburg", state: "Hamburg", country: "Germany", lat: 53.5496, lng: 9.9637 },
+      { text: "Königstraße 28, Stuttgart, Germany", line1: "Königstraße 28", postal: "70173", city: "Stuttgart", state: "Baden-Württemberg", country: "Germany", lat: 48.7784, lng: 9.1794 },
+      { text: "Zeil 112, Frankfurt, Germany", line1: "Zeil 112", postal: "60313", city: "Frankfurt", state: "Hesse", country: "Germany", lat: 50.1141, lng: 8.6790 }
+    ],
+    "United Kingdom": [
+      { text: "221B Baker Street, London, United Kingdom", line1: "221B Baker Street", postal: "NW1 6XE", city: "London", state: "England", country: "United Kingdom", lat: 51.5238, lng: -0.1585 },
+      { text: "10 Princes Street, Edinburgh, United Kingdom", line1: "10 Princes Street", postal: "EH2 2AN", city: "Edinburgh", state: "Scotland", country: "United Kingdom", lat: 55.9533, lng: -3.1883 },
+      { text: "45 Broad Street, Oxford, United Kingdom", line1: "45 Broad Street", postal: "OX1 3BQ", city: "Oxford", state: "England", country: "United Kingdom", lat: 51.7548, lng: -1.2570 },
+      { text: "8 Victoria Square, Birmingham, United Kingdom", line1: "8 Victoria Square", postal: "B1 1BD", city: "Birmingham", state: "England", country: "United Kingdom", lat: 52.4796, lng: -1.9026 },
+      { text: "12 The Rows, Chester, United Kingdom", line1: "12 The Rows", postal: "CH1 1LQ", city: "Chester", state: "England", country: "United Kingdom", lat: 53.1905, lng: -2.8919 }
+    ],
+    "Spain": [
+      { text: "Gran Vía 28, Madrid, Spain", line1: "Gran Vía 28", postal: "28013", city: "Madrid", state: "Madrid", country: "Spain", lat: 40.4203, lng: -3.7059 },
+      { text: "La Rambla 91, Barcelona, Spain", line1: "La Rambla 91", postal: "08001", city: "Barcelona", state: "Catalonia", country: "Spain", lat: 41.3818, lng: 2.1700 },
+      { text: "Calle Sierpes 14, Seville, Spain", line1: "Calle Sierpes 14", postal: "41004", city: "Seville", state: "Andalusia", country: "Spain", lat: 37.3891, lng: -5.9945 },
+      { text: "Plaza Nueva 5, Granada, Spain", line1: "Plaza Nueva 5", postal: "18010", city: "Granada", state: "Andalusia", country: "Spain", lat: 37.1760, lng: -3.5988 },
+      { text: "Calle Larios 3, Málaga, Spain", line1: "Calle Larios 3", postal: "29015", city: "Málaga", state: "Andalusia", country: "Spain", lat: 36.7213, lng: -4.4214 }
+    ],
+    "France": [
+      { text: "15 Rue de Rivoli, Paris, France", line1: "15 Rue de Rivoli", postal: "75001", city: "Paris", state: "Île-de-France", country: "France", lat: 48.8566, lng: 2.3522 },
+      { text: "24 Promenade des Anglais, Nice, France", line1: "24 Promenade des Anglais", postal: "06000", city: "Nice", state: "Provence-Alpes-Côte d'Azur", country: "France", lat: 43.6955, lng: 7.2655 },
+      { text: "8 Place Bellecour, Lyon, France", line1: "8 Place Bellecour", postal: "69002", city: "Lyon", state: "Auvergne-Rhône-Alpes", country: "France", lat: 45.7578, lng: 4.8320 },
+      { text: "5 Rue Sainte-Catherine, Bordeaux, France", line1: "5 Rue Sainte-Catherine", postal: "33000", city: "Bordeaux", state: "Nouvelle-Aquitaine", country: "France", lat: 44.8378, lng: -0.5792 },
+      { text: "12 Quai des Bateliers, Strasbourg, France", line1: "12 Quai des Bateliers", postal: "67000", city: "Strasbourg", state: "Grand Est", country: "France", lat: 48.5804, lng: 7.7497 }
+    ],
+    "Italy": [
+      { text: "Via del Corso 18, Rome, Italy", line1: "Via del Corso 18", postal: "00186", city: "Rome", state: "Lazio", country: "Italy", lat: 41.9028, lng: 12.4964 },
+      { text: "Via Montenapoleone 5, Milan, Italy", line1: "Via Montenapoleone 5", postal: "20121", city: "Milan", state: "Lombardy", country: "Italy", lat: 45.4685, lng: 9.1954 },
+      { text: "Piazza San Marco 1, Venice, Italy", line1: "Piazza San Marco 1", postal: "30124", city: "Venice", state: "Veneto", country: "Italy", lat: 45.4343, lng: 12.3388 },
+      { text: "Via dei Calzaiuoli 7, Florence, Italy", line1: "Via dei Calzaiuoli 7", postal: "50122", city: "Florence", state: "Tuscany", country: "Italy", lat: 43.7696, lng: 11.2558 },
+      { text: "Via Toledo 45, Naples, Italy", line1: "Via Toledo 45", postal: "80134", city: "Naples", state: "Campania", country: "Italy", lat: 40.8456, lng: 14.2488 }
+    ]
+  };
+  function getMockAddresses() {
+    const countryEl = document.getElementById("ae-country");
+    const country = countryEl ? countryEl.value.trim() : "";
+    return MOCK_ADDRESSES_BY_COUNTRY[country] || MOCK_ADDRESSES_BY_COUNTRY["Portugal"] || [];
+  }
+  let acCleanup = null;
+
+  function setupAddressAutocomplete() {
+    if (acCleanup) { acCleanup(); acCleanup = null; }
+    const line1 = document.getElementById("ae-line1");
+    if (!line1) return;
+    const parent = line1.closest(".field-group");
+    if (!parent) return;
+    let dropdown = parent.querySelector(".addr-autocomplete");
+    if (!dropdown) {
+      dropdown = document.createElement("div");
+      dropdown.className = "addr-autocomplete";
+      parent.appendChild(dropdown);
+    }
+    const pinSvg = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/><circle cx="12" cy="9" r="2.5"/></svg>';
+    function onInput() {
+      const q = line1.value.trim().toLowerCase();
+      if (q.length < 1) { dropdown.classList.remove("visible"); return; }
+      const pool = getMockAddresses();
+      const matches = pool.filter(a => {
+        const words = q.split(/\s+/);
+        return words.every(w => a.text.toLowerCase().includes(w));
+      });
+      const show = matches.length ? matches : pool.slice(0, 3);
+      dropdown.innerHTML = show.map(a => `<div class="ac-item" data-addr='${JSON.stringify(a).replace(/'/g,"&#39;")}'>${pinSvg}<span>${a.text}</span></div>`).join("");
+      dropdown.classList.add("visible");
+    }
+    function onBlur() {
+      setTimeout(() => dropdown.classList.remove("visible"), 250);
+    }
+    function onFocus() {
+      if (line1.value.trim().length >= 1) onInput();
+    }
+    function onClick(e) {
+      const item = e.target.closest(".ac-item");
+      if (!item) return;
+      const addr = JSON.parse(item.dataset.addr);
+      document.getElementById("ae-line1").value = addr.line1;
+      document.getElementById("ae-postal").value = addr.postal;
+      document.getElementById("ae-city").value = addr.city;
+      document.getElementById("ae-state").value = addr.state;
+      setInputOrSelectValue("ae-country", addr.country);
+      dropdown.classList.remove("visible");
+      document.querySelectorAll(".field-error").forEach(el => el.classList.remove("field-error"));
+      document.querySelectorAll(".field-error-msg").forEach(el => el.remove());
+      if (addr.lat && addr.lng) {
+        const latEl = document.getElementById("ae-lat");
+        const lngEl = document.getElementById("ae-lng");
+        if (latEl) latEl.value = Number(addr.lat).toFixed(6);
+        if (lngEl) lngEl.value = Number(addr.lng).toFixed(6);
+        if (mapPicker && mapMarker) {
+          mapPicker.setView([addr.lat, addr.lng], 15, { animate: true });
+          mapMarker.setLatLng([addr.lat, addr.lng]);
+        }
+      }
+    }
+    line1.addEventListener("input", onInput);
+    line1.addEventListener("blur", onBlur);
+    line1.addEventListener("focus", onFocus);
+    dropdown.addEventListener("mousedown", onClick);
+    acCleanup = () => {
+      line1.removeEventListener("input", onInput);
+      line1.removeEventListener("blur", onBlur);
+      line1.removeEventListener("focus", onFocus);
+      dropdown.removeEventListener("mousedown", onClick);
+    };
   }
 
   function openAddressPanel(propertyId) {
@@ -4121,6 +4554,7 @@
       const lng = target.lng ?? defaultCoordinates.lng;
       document.getElementById("ae-lat").value = Number(lat).toFixed(6);
       document.getElementById("ae-lng").value = Number(lng).toFixed(6);
+      setupAddressAutocomplete();
       if (addressMapInitTimer) clearTimeout(addressMapInitTimer);
       addressMapInitTimer = setTimeout(() => {
         addressMapInitTimer = null;
@@ -4134,9 +4568,39 @@
     renderStartCheckList();
   }
 
+  function validateAddressFields() {
+    const fields = [
+      { id: "ae-line1", label: "Address line 1" },
+      { id: "ae-postal", label: "Postal code" },
+      { id: "ae-city", label: "City" },
+      { id: "ae-state", label: "State" },
+      { id: "ae-country", label: "Country" }
+    ];
+    let hasError = false;
+    fields.forEach(f => {
+      const el = document.getElementById(f.id);
+      if (!el) return;
+      const errId = f.id + "-err";
+      const existing = document.getElementById(errId);
+      if (existing) existing.remove();
+      el.classList.remove("field-error");
+      if (!el.value.trim()) {
+        hasError = true;
+        el.classList.add("field-error");
+        const msg = document.createElement("div");
+        msg.className = "field-error-msg";
+        msg.id = errId;
+        msg.textContent = f.label + " is required";
+        el.parentNode.appendChild(msg);
+      }
+    });
+    return !hasError;
+  }
+
   function saveAddress() {
     const idx = addressChecklist.findIndex((item) => item.id === activeAddressProperty);
     if (idx >= 0) {
+      if (!validateAddressFields()) return;
       const line1 = document.getElementById("ae-line1").value.trim();
       const line2 = document.getElementById("ae-line2").value.trim();
       const postal = document.getElementById("ae-postal").value.trim();
@@ -4145,19 +4609,6 @@
       const countryEl = document.getElementById("ae-country");
       const state = stateEl ? stateEl.value.trim() : "";
       const country = countryEl ? countryEl.value.trim() : "";
-      const missing = [];
-      if (!line1) missing.push("Address line 1");
-      if (!postal) missing.push("Postal code");
-      if (!city) missing.push("City");
-      if (!state) missing.push("State / region");
-      if (!country) missing.push("Country");
-      if (missing.length) {
-        window.alert(
-          "Please complete all required address fields (everything except address line 2).\n\nMissing:\n• " +
-            missing.join("\n• ")
-        );
-        return;
-      }
       const lat = Number(document.getElementById("ae-lat").value);
       const lng = Number(document.getElementById("ae-lng").value);
       addressChecklist[idx].line1 = line1;
@@ -4231,7 +4682,7 @@
       heading.textContent = n === 1 ? "Review 1 property" : `Review ${n} properties`;
     }
     list.innerHTML = reviewable
-      .map((item) => `<div class="review-row"><div class="review-name">${item.name}</div><div class="review-loc">${formatAddressLine(item)}</div></div>`)
+      .map((item) => `<div class="review-row"><div class="review-row-name">${item.name}</div><div class="review-row-addr">${formatAddressLine(item)}</div></div>`)
       .join("");
     const consent = document.getElementById("review-consent-checkbox");
     consent.checked = false;
@@ -4251,6 +4702,8 @@
   function toggleReviewConsent(checked) {
     const btn = document.getElementById("review-confirm-btn");
     btn.disabled = !checked;
+    const tooltip = document.getElementById("rc-tooltip");
+    if (tooltip) tooltip.classList.toggle("hidden", checked);
   }
 
   function confirmAndContinue() {
