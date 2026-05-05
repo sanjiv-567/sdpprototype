@@ -575,7 +575,7 @@
   .config-row .gear { cursor: pointer; color: var(--text-dis); }
 
   /* ── SLIDER ── */
-  .slider-group { margin-bottom: 0; min-width: 0; }
+  .slider-group { margin-bottom: 0; min-width: 0; padding: 24px; border-radius: 16px; border: 1px solid var(--border); background: var(--bg); }
   .slider-header { display: flex; align-items: flex-start; justify-content: space-between; gap: 12px; margin-bottom: 8px; flex-wrap: wrap; }
   .slider-header .sh-left { display: flex; align-items: center; gap: 8px; }
   .slider-header .sh-dot { width: 8px; height: 8px; border-radius: 4px; background: var(--green); }
@@ -646,7 +646,7 @@
   .prop-optional-wrap:not(.open) .pot-arrow { transform: rotate(-90deg); }
   .prop-optional-body { padding: 0 16px 16px; border-top: 1px solid var(--border); }
   .prop-optional-wrap:not(.open) .prop-optional-body { display: none; }
-  .rooms-grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
+  .rooms-grid-4 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
   @media (max-width: 960px) {
     .rooms-grid-4 { grid-template-columns: 1fr 1fr; }
   }
@@ -879,9 +879,9 @@
     scrollbar-gutter: stable;
     padding-right: 4px;
   }
-  .startcheck-item { display: flex; flex-direction: column; align-items: stretch; padding: 24px 32px; border-radius: 16px; background: var(--bg-muted); border: none; transition: box-shadow 0.25s ease, border-color 0.25s ease; }
-  .startcheck-item.expanded { border: 1px solid var(--border); box-shadow: 0 0 16px rgba(52,58,63,0.13); overflow: visible; }
-  .startcheck-expanded { animation: expandCard 0.3s ease-out; }
+  .startcheck-item { display: flex; flex-direction: column; align-items: stretch; padding: 24px 32px; border-radius: 16px; background: var(--bg-muted); border: 1px solid transparent; transition: box-shadow 0.35s ease, border-color 0.35s ease; }
+  .startcheck-item.expanded { border-color: var(--border); box-shadow: 0 0 16px rgba(52,58,63,0.13); overflow: visible; }
+  .startcheck-expanded { animation: expandCard 0.35s ease-out; }
   @keyframes expandCard { from { opacity: 0; transform: translateY(-8px); } to { opacity: 1; transform: translateY(0); } }
   .startcheck-item .left { display: flex; align-items: center; gap: 12px; }
   .startcheck-item .home-icon { width: 52px; height: 64px; border-radius: 5px; background: #f0f4f6; display: flex; align-items: center; justify-content: center; color: var(--text-dis); flex-shrink: 0; }
@@ -946,6 +946,7 @@
   .address-fields .field-row { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; }
   .address-map { border-radius: 16px; min-height: 300px; border: none; overflow: hidden; }
   .coord-row { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 8px; }
+  .coord-expand.open + .coord-row { background: var(--bg-muted); border-radius: 0 0 16px 16px; padding: 0 16px 16px; margin-top: 0; }
   .coord-note { margin-top: 8px; font-size: 12px; color: var(--text-dis); }
   .address-actions { display: flex; justify-content: flex-end; gap: 16px; margin-top: 16px; border-top: 1px solid var(--border); padding-top: 16px; }
   .address-actions .btn-discard { background: transparent; border: 1px solid #21272a; color: #21272a; height: 40px; padding: 0 24px; border-radius: 32px; font: 600 14px/20px var(--font); cursor: pointer; }
@@ -974,10 +975,12 @@
   .edit-addr-modal .address-actions .btn-discard { font: 600 16px/23px var(--font); }
   .edit-addr-modal .address-actions .btn-save-addr { font: 600 16px/23px var(--font); }
   .edit-addr-modal .coord-expand { display: flex; align-items: center; justify-content: space-between; padding: 16px; background: var(--bg-muted); border-radius: 16px; cursor: pointer; }
+  .edit-addr-modal .coord-expand.open { border-radius: 16px 16px 0 0; }
   .edit-addr-modal .coord-expand-label { display: flex; align-items: center; gap: 10px; font: 500 14px/20px var(--font); color: var(--text); }
   .edit-addr-modal .coord-expand-label .optional-tag { font: 500 12px/16px var(--font); }
   .edit-addr-modal .coord-expand svg { width: 24px; height: 24px; transition: transform 0.2s; }
   .edit-addr-modal .coord-expand.open svg { transform: rotate(180deg); }
+  .edit-addr-modal .coord-expand.open + .coord-row { background: var(--bg-muted); border-radius: 0 0 16px 16px; padding: 0 16px 16px; margin-top: 0; }
   .review-modal { width: 50%; min-width: 800px; max-width: 900px; background: var(--bg); border-radius: 24px; box-shadow: 0 6px 12px rgba(0,0,0,0.1); padding: 24px; display: flex; flex-direction: column; gap: 24px; }
   .review-card { border: none; border-radius: 16px; padding: 24px; background: var(--bg-muted); display: flex; flex-direction: column; gap: 16px; }
   .review-card > .review-card-heading { font: 600 20px/24px var(--font); margin-bottom: 0; color: var(--text); }
@@ -1035,8 +1038,7 @@
   .activate-field-group .select { height: 48px; border-radius: 8px; border: 1px solid var(--border); padding: 12px; font: 600 16px/23px var(--font); color: var(--text); background: white; box-sizing: border-box; width: 100%; }
   .activate-field-group .input::placeholder { font-weight: 500; color: var(--text-dis); }
   .activate-field-group .select { appearance: none; -webkit-appearance: none; background-image: url("data:image/svg+xml,%3Csvg width='12' height='8' viewBox='0 0 12 8' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 1.5L6 6.5L11 1.5' stroke='%2321272A' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 12px center; padding-right: 36px; cursor: pointer; }
-  .activate-field-group .field-error { font: 500 12px/16px var(--font); color: #da1e28; margin: 4px 0 0; display: none; }
-  .activate-field-group .field-error.show { display: block; }
+  .activate-field-group .field-error { display: none; }
   .activate-field-group .input.has-error,
   .activate-field-group .select.has-error { border-color: #da1e28; }
   /* Info hints — visible tooltip bubble (native title is slow/unreliable); DS colors */
@@ -1065,9 +1067,9 @@
     font-size: 12px;
     font-weight: 500;
     line-height: 1.35;
-    text-align: center;
-    white-space: normal;
-    max-width: min(280px, calc(100vw - 24px));
+    text-align: left;
+    white-space: pre-line;
+    max-width: min(320px, calc(100vw - 24px));
     width: max-content;
     box-shadow: var(--shadow);
     opacity: 0;
@@ -1140,8 +1142,11 @@
   .btn-act-discard:hover { background: rgba(0,0,0,0.04); }
   .btn-act-activate { display: inline-flex; align-items: center; justify-content: center; height: 40px; padding: 0 24px; border-radius: 32px; border: none; background: #21272a; color: white; font: 600 16px/23px var(--font); cursor: pointer; transition: background 0.12s; }
   .btn-act-activate:hover { background: #343a3f; }
-  .activate-success-modal { position: relative; text-align: center; padding: 32px 24px 24px; max-width: 440px; }
-  .activate-success-hero { position: relative; margin: 32px auto 24px; max-width: 320px; }
+  .btn-act-activate:disabled { opacity: 0.5; cursor: not-allowed; }
+  .btn-act-activate:disabled:hover { background: #21272a; }
+  .btn-save-dash.is-sticky { position: sticky; bottom: 16px; z-index: 10; }
+  .activate-success-modal { position: relative; text-align: center; max-width: 440px; padding: 24px; display: flex; flex-direction: column; gap: 24px; align-items: center; }
+  .activate-success-img { display: block; width: 160px; height: auto; margin: 0 auto; }
   .activate-success-art-wrap { position: relative; border-radius: var(--r-16); background: var(--bg-muted); overflow: hidden; }
   .activate-success-badge {
     position: absolute;
@@ -1161,9 +1166,12 @@
   .activate-success-badge svg { display: block; }
   .activate-success-art { padding: 24px 16px 16px; }
   .activate-success-art .activate-success-illu { display: block; width: 100%; height: auto; max-height: 168px; }
-  .activate-success-heading { margin: 0 0 12px; font-size: 22px; font-weight: 700; text-align: center; color: var(--text); }
-  .activate-success-body { margin: 0 0 24px; font: 500 14px/22px var(--font); color: var(--text-2); text-align: center; }
+  .activate-success-heading { margin: 0; font: 600 22px/28px var(--font); text-align: center; color: var(--text); }
+  .activate-success-body { margin: 0; font: 500 16px/23px var(--font); color: var(--text-2); text-align: center; }
+  .activate-success-actions { display: flex; flex-direction: column; gap: 8px; width: 100%; }
   .activate-success-cta { width: 100%; justify-content: center; }
+  .btn-success-secondary { display: inline-flex; align-items: center; justify-content: center; width: 100%; height: 40px; padding: 0 24px; border-radius: 32px; border: 1px solid var(--text); background: transparent; color: var(--text); font: 600 16px/23px var(--font); cursor: pointer; transition: background 0.12s; box-sizing: border-box; }
+  .btn-success-secondary:hover { background: rgba(0,0,0,0.04); }
 /* ── LANDING (SDP marketing) ── */
   .landing-back {
     display: flex;
@@ -1262,9 +1270,7 @@
   .config-panel .btn-config-save { width: 100%; margin-top: 12px; justify-content: center; }
   .cr-badge-agg-pink { background: var(--bg-red); color: #800817; }
   .cr-badge-con { background: var(--gray-100); color: var(--text-2); }
-  .advanced-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-top: 16px; }
-  /* In the narrow Dynamic settings column, two slider columns collapse labels — stack one column */
-  .config-panel .advanced-grid { grid-template-columns: 1fr; gap: 24px; }
+  .advanced-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
   .advanced-full { grid-column: 1 / -1; }
   .hist-anchor-actions {
     display: flex;
@@ -1282,6 +1288,14 @@
     .features-grid-4 { grid-template-columns: 1fr; }
     .cta-banner { padding: 24px; }
     .advanced-grid { grid-template-columns: 1fr; }
+    #propdetail-map { display: none; }
+    .amenities-grid { grid-template-columns: 1fr 1fr; }
+    .dash-layout { flex-direction: column; }
+    .dash-side { width: 100%; }
+    .propdata { flex-direction: column; }
+    .propdata-menu { width: 100%; display: flex; gap: 0; }
+    .propdata-menu .pm-item { border-left: none; border-bottom: 2px solid transparent; }
+    .propdata-menu .pm-item.active { border-left-color: transparent; border-bottom-color: var(--blue); }
   }
   .fc-graphic {
     margin-top: 0;
@@ -1356,7 +1370,8 @@
   .breadcrumb-back .bb-link:hover { color: var(--text); }
   .breadcrumb-back .bb-link:focus-visible { outline: none; box-shadow: 0 0 0 2px #669afe; border-radius: 4px; }
   .breadcrumb-back .back-btn svg { width: 16px; height: 16px; }
-  .chart-tooltip-fake { position: absolute; left: 50%; top: 24px; transform: translateX(-50%); background: var(--bg); border: 1px solid var(--border); border-radius: var(--r-8); padding: 12px; font: 500 12px/16px var(--font); box-shadow: var(--shadow); z-index: 2; min-width: 200px; }
+  .chart-tooltip-fake { position: absolute; top: 24px; left: 50%; transform: translateX(-50%); background: var(--bg); border: 1px solid var(--border); border-radius: var(--r-8); padding: 12px; font: 500 12px/16px var(--font); box-shadow: var(--shadow); z-index: 2; min-width: 200px; opacity: 0; pointer-events: none; transition: opacity 0.15s ease; }
+  .chart-wrap:hover .chart-tooltip-fake { opacity: 1; }
   .chart-tooltip-fake .ct-date { font-weight: 600; margin-bottom: 8px; }
   .chart-tooltip-fake .ct-row { display: flex; justify-content: space-between; gap: 12px; margin: 4px 0; }
   .dot-b { display: inline-block; width: 8px; height: 8px; border-radius: 50%; background: #0f62fe; }
@@ -2006,8 +2021,8 @@
       <div class="view" id="view-dashboard">
         <div class="dashboard">
           <div class="breadcrumb-back">
-            <button type="button" class="back-btn" onclick="showView('lobby')" aria-label="Back"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg></button>
-            <button type="button" class="bb-link" onclick="showView('lobby')">Return to lobby</button>
+            <button type="button" class="back-btn" onclick="if(!tryLeaveDashboard('lobby')) showView('lobby')" aria-label="Back"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg></button>
+            <button type="button" class="bb-link" onclick="if(!tryLeaveDashboard('lobby')) showView('lobby')">Return to lobby</button>
           </div>
           <div class="prop-page-head">
             <div class="prop-page-titles">
@@ -2020,12 +2035,12 @@
             </div>
           </div>
           <div class="tabs" id="dash-tabs">
-            <button type="button" class="tab active" onclick="showDashTab('data')">Property data</button>
-            <button type="button" class="tab" onclick="showDashTab('strategy')">Price strategy</button>
+            <button type="button" class="tab active" onclick="showDashTab('strategy')">Price strategy</button>
+            <button type="button" class="tab" onclick="showDashTab('data')">Property data</button>
           </div>
 
           <!-- Strategy Tab -->
-          <div id="tab-strategy" style="display:none">
+          <div id="tab-strategy">
           <div class="property-inline-banner" id="prop-amenity-banner">Add amenities in the <a href="#" onclick="event.preventDefault();goToPropertyDataAmenities()">'property data'</a> section to increase the recommended price.</div>
             <div class="dash-layout">
               <div class="dash-main">
@@ -2056,57 +2071,56 @@
               </div>
               <div class="dash-side">
                 <div class="config-panel">
-                  <div class="cp-header"><span class="cp-title">Dynamic settings</span></div>
+                  <div class="cp-header"><span class="cp-title" style="font:600 20px/24px var(--font);color:var(--text)">Dynamic settings</span></div>
                   <div class="config-row"><div><div class="cr-left"><div class="cr-dot"></div><span class="cr-label">Base price</span><span class="label-hint" title="Starting nightly price in rule-based mode. Dynamic Pricing adjusts it daily. Min/max limits stay separate.">ⓘ</span></div></div><div class="cr-right"><span class="cr-val" id="cr-base">€172</span><span class="cr-badge cr-badge-agg-pink">AGG</span><span class="gear" onclick="openWhModal('bp')" title="Open base price settings" role="button" tabindex="0">⚙</span></div></div>
                   <div class="config-row"><div><div class="cr-left"><div class="cr-dot"></div><span class="cr-label">Minimum/Maximum</span><span class="label-hint" title="SDP only suggests prices inside this range.">ⓘ</span></div></div><div class="cr-right"><span class="cr-val" id="cr-minmax">€75 – €500</span><span class="gear" onclick="openWhModal('mm')" title="Open minimum and maximum price limits" role="button" tabindex="0">⚙</span></div></div>
                   <div class="config-row"><div><div class="cr-left"><div class="cr-dot"></div><span class="cr-label">Minimum stays</span><span class="label-hint" title="Synced with your rate to booking portals.">ⓘ</span></div></div><div class="cr-right"><span class="cr-val" id="cr-minstay">7 nights</span><span class="gear" onclick="openWhModal('ms')" title="Open minimum stay settings" role="button" tabindex="0">⚙</span></div></div>
-                  <button type="button" class="btn btn-color config-panel-save btn-config-save" onclick="window.alert('Prototype: settings saved.')">Save changes made</button>
-
-                  <button type="button" class="advanced-toggle open" onclick="this.classList.toggle('open');document.getElementById('advanced-body').style.display=this.classList.contains('open')?'block':'none'">
-                    Advanced Settings <span style="font-size:12px;color:var(--text-dis)">*Optional</span> <span class="arrow">▾</span>
-                  </button>
-                  <div id="advanced-body" class="advanced-body">
-                    <div class="advanced-grid">
-                      <div class="slider-group">
-                        <div class="slider-header"><div class="sh-left"><div class="sh-dot"></div><span class="sh-label">Seasonality</span><span class="label-hint" title="How much seasonality affects suggested rates.">ⓘ</span></div><div class="sh-right slider-aggression-display"><span class="slider-aggression-word">Aggressive</span><span class="cr-badge slider-aggression-badge cr-badge-agg-pink">AGG</span></div></div>
-                        <input type="range" min="0" max="2" value="2" class="slider-track slider-aggression-range" aria-label="Seasonality">
-                        <div class="slider-labels"><span>Conservative</span><span>Recommended</span><span>Aggressive</span></div>
-                      </div>
-                      <div class="slider-group">
-                        <div class="slider-header"><div class="sh-left"><div class="sh-dot"></div><span class="sh-label">Demand Sensitivity</span><span class="label-hint" title="How strongly comps and demand move your rates.">ⓘ</span></div><div class="sh-right slider-aggression-display"><span class="slider-aggression-word">Recommended</span><span class="cr-badge slider-aggression-badge cr-badge-rec">REC</span></div></div>
-                        <input type="range" min="0" max="2" value="1" class="slider-track slider-aggression-range" aria-label="Demand sensitivity">
-                        <div class="slider-labels"><span>Conservative</span><span>Recommended</span><span>Aggressive</span></div>
-                      </div>
-                      <div class="slider-group">
-                        <div class="slider-header"><div class="sh-left"><div class="sh-dot"></div><span class="sh-label">Last Minute</span><span class="label-hint" title="Pricing behaviour for last-minute bookings.">ⓘ</span></div><div class="sh-right slider-aggression-display"><span class="slider-aggression-word">Aggressive</span><span class="cr-badge slider-aggression-badge cr-badge-agg-pink">AGG</span></div></div>
-                        <input type="range" min="0" max="2" value="2" class="slider-track slider-aggression-range" aria-label="Last minute">
-                        <div class="slider-labels"><span>Conservative</span><span>Recommended</span><span>Aggressive</span></div>
-                      </div>
-                      <div class="slider-group">
-                        <div class="slider-header"><div class="sh-left"><div class="sh-dot"></div><span class="sh-label">Far Future</span><span class="label-hint" title="Pricing for dates far in the future.">ⓘ</span></div><div class="sh-right slider-aggression-display"><span class="slider-aggression-word">Recommended</span><span class="cr-badge slider-aggression-badge cr-badge-rec">REC</span></div></div>
-                        <input type="range" min="0" max="2" value="1" class="slider-track slider-aggression-range" aria-label="Far future">
-                        <div class="slider-labels"><span>Conservative</span><span>Recommended</span><span>Aggressive</span></div>
-                      </div>
-                      <div class="slider-group advanced-full">
-                        <div class="slider-header" style="align-items:flex-start">
-                          <div class="sh-left" style="flex:1;min-width:0"><div class="sh-dot"></div><span class="sh-label">Historical anchoring</span><span class="label-hint" title="Past bookings influence how rates are anchored.">ⓘ</span></div>
-                          <p class="hist-anchor-hint" style="margin:0 0 0 12px;font-size:12px;font-weight:400;color:var(--text-dis);line-height:1.35;flex:1;min-width:120px;text-align:right">The shortest stay guests can book.</p>
-                        </div>
-                        <div class="hist-anchor-actions">
-                          <span style="font-size:12px;color:var(--text-dis)">Not configured</span>
-                          <span class="gear" onclick="openWhModal('ha')">⚙</span>
-                        </div>
-                      </div>
-                    </div>
-                    <button type="button" class="btn btn-color config-panel-save" style="width:100%;margin-top:16px;justify-content:center" onclick="window.alert('Prototype: advanced settings saved.')">Save changes made</button>
-                  </div>
+                  <button type="button" id="btn-save-dynamic" class="btn-save-dash" style="background:none;border:none;font:500 14px/20px var(--font);color:var(--text-dis);cursor:default;padding:8px 0;text-align:right;width:100%;margin-top:8px" disabled onclick="saveDashChanges(this)">Save changes made</button>
                 </div>
               </div>
+            </div>
+
+            <div style="margin-top:32px">
+              <div style="display:flex;align-items:baseline;gap:8px;margin-bottom:16px">
+                <h3 style="font:600 20px/24px var(--font);color:var(--text);margin:0">Advanced Settings</h3>
+                <span style="font:500 14px/20px var(--font);color:var(--text-dis)">*Optional</span>
+              </div>
+              <div class="advanced-grid">
+                <div class="slider-group">
+                  <div class="slider-header"><div class="sh-left"><div class="sh-dot"></div><span class="sh-label">Seasonality</span></div><div class="sh-right slider-aggression-display"><span class="slider-aggression-word">Aggressive</span><span class="cr-badge slider-aggression-badge cr-badge-agg-pink">AGG</span></div></div>
+                  <input type="range" min="0" max="2" value="2" class="slider-track slider-aggression-range" aria-label="Seasonality">
+                  <div class="slider-labels"><span>Conservative</span><span>Recommended</span><span>Aggressive</span></div>
+                </div>
+                <div class="slider-group">
+                  <div class="slider-header"><div class="sh-left"><div class="sh-dot"></div><span class="sh-label">Demand Sensitivity</span></div><div class="sh-right slider-aggression-display"><span class="slider-aggression-word">Recommended</span><span class="cr-badge slider-aggression-badge cr-badge-rec">REC</span></div></div>
+                  <input type="range" min="0" max="2" value="1" class="slider-track slider-aggression-range" aria-label="Demand sensitivity">
+                  <div class="slider-labels"><span>Conservative</span><span>Recommended</span><span>Aggressive</span></div>
+                </div>
+                <div class="slider-group">
+                  <div class="slider-header"><div class="sh-left"><div class="sh-dot"></div><span class="sh-label">Last Minute</span></div><div class="sh-right slider-aggression-display"><span class="slider-aggression-word">Aggressive</span><span class="cr-badge slider-aggression-badge cr-badge-agg-pink">AGG</span></div></div>
+                  <input type="range" min="0" max="2" value="2" class="slider-track slider-aggression-range" aria-label="Last minute">
+                  <div class="slider-labels"><span>Conservative</span><span>Recommended</span><span>Aggressive</span></div>
+                </div>
+                <div class="slider-group">
+                  <div class="slider-header"><div class="sh-left"><div class="sh-dot"></div><span class="sh-label">Historical Anchoring</span></div></div>
+                  <p style="font:500 14px/20px var(--font);color:var(--text-dis);margin:4px 0 0">The shortest stay guests can book.</p>
+                  <div class="hist-anchor-actions">
+                    <span style="font:500 14px/20px var(--font);color:var(--text-dis)">Not Configured</span>
+                    <span class="gear" onclick="openWhModal('ha')">⚙</span>
+                  </div>
+                </div>
+                <div class="slider-group">
+                  <div class="slider-header"><div class="sh-left"><div class="sh-dot"></div><span class="sh-label">Far Future</span></div><div class="sh-right slider-aggression-display"><span class="slider-aggression-word">Recommended</span><span class="cr-badge slider-aggression-badge cr-badge-rec">REC</span></div></div>
+                  <input type="range" min="0" max="2" value="1" class="slider-track slider-aggression-range" aria-label="Far future">
+                  <div class="slider-labels"><span>Conservative</span><span>Recommended</span><span>Aggressive</span></div>
+                </div>
+              </div>
+              <button type="button" id="btn-save-advanced" class="btn-act-activate btn-save-dash" style="width:100%;margin-top:24px;justify-content:center;opacity:0.5;cursor:not-allowed" disabled onclick="saveDashChanges(this)">Save changes made</button>
             </div>
           </div>
 
           <!-- Property Data Tab -->
-          <div id="tab-data">
+          <div id="tab-data" style="display:none">
             <div class="propdata">
               <div class="propdata-menu">
                 <div class="pm-item active" onclick="switchPropTab(this,'propdetail')">Property detail</div>
@@ -2116,46 +2130,48 @@
 
                 <!-- Property Detail Panel -->
                 <div id="propdetail-panel">
-                    <p style="font-size:14px;color:var(--text-dis);margin-bottom:24px">Accurate property data helps the pricing algorithm calculate the best rates for your area and property type.</p>
-
-                  <div style="display:flex;align-items:baseline;gap:8px;margin-bottom:12px">
-                    <span style="font-weight:600;font-size:14px">Address</span>
-                    <span style="font-size:11px;color:var(--red);font-weight:600">*Required</span>
-                  </div>
-                  <input class="input" id="prop-line1" placeholder="Address line 1" style="margin-bottom:8px">
-                  <input class="input" id="prop-line2" placeholder="Address line 2" style="margin-bottom:8px">
-                  <div class="form-row form-row-3">
-                    <input class="input" id="prop-postal" placeholder="e.g 102352">
-                    <input class="input" id="prop-city" placeholder="e.g Berlin">
-                    <select class="select" id="prop-region" style="width:100%"><option value="">Region</option><option>Berlin</option><option>Wyoming</option><option>Cumbria</option></select>
-                  </div>
-                  <select class="select" id="prop-country" style="width:60%;margin:8px 0 16px"></select>
-
-                  <div class="prop-optional-wrap open" id="prop-optional-coords">
-                    <button type="button" class="prop-optional-toggle" aria-expanded="true" aria-controls="prop-optional-coords-body" id="prop-optional-coords-btn" onclick="togglePropOptionalCoords()">
-                      <span class="pot-left">
-                        <span class="pot-label">Longitude / Latitude</span>
-                        <span class="pot-optional">*Optional</span>
-                      </span>
-                      <span class="pot-arrow" aria-hidden="true">▾</span>
-                    </button>
-                    <div class="prop-optional-body" id="prop-optional-coords-body">
-                      <p style="font-size:12px;color:var(--text-dis);margin:12px 0 8px">Helps improve pricing accuracy. Auto-filled from address when possible.</p>
-                      <div style="display:flex;gap:8px;flex-wrap:wrap">
-                        <div style="flex:1;min-width:200px"><label class="label">Latitude</label><input class="input" id="prop-lat" placeholder="e.g. 42.3601"></div>
-                        <div style="flex:1;min-width:200px"><label class="label">Longitude</label><input class="input" id="prop-lng" placeholder="e.g. -71.0589"></div>
+                  <div style="display:flex;gap:24px;align-items:flex-start">
+                    <div style="flex:1;min-width:0">
+                      <div style="margin-bottom:12px">
+                        <span style="font:500 14px/20px var(--font);color:var(--text)">Address</span>
                       </div>
-                      <div style="font-size:11px;color:var(--blue);cursor:pointer;margin-top:8px">🔄 Auto-fill from address</div>
+                      <input class="input" id="prop-line1" placeholder="Address line 1" style="margin-bottom:8px">
+                      <input class="input" id="prop-line2" placeholder="Address line 2" style="margin-bottom:8px">
+                      <div class="form-row form-row-3">
+                        <div><label class="label" style="font:500 14px/20px var(--font);color:var(--text);margin-bottom:4px;display:block">Postal code</label><input class="input" id="prop-postal" placeholder="e.g 102352"></div>
+                        <div><label class="label" style="font:500 14px/20px var(--font);color:var(--text);margin-bottom:4px;display:block">City</label><input class="input" id="prop-city" placeholder="e.g Berlin"></div>
+                        <div><label class="label" style="font:500 14px/20px var(--font);color:var(--text);margin-bottom:4px;display:block">State</label><select class="select" id="prop-region" style="width:100%"><option value="">Berlin</option><option>Berlin</option><option>Wyoming</option><option>Cumbria</option></select></div>
+                      </div>
+                      <div style="margin-top:8px">
+                        <label class="label" style="font:500 14px/20px var(--font);color:var(--text);margin-bottom:4px;display:block">Country</label>
+                        <select class="select" id="prop-country" style="width:60%"></select>
+                      </div>
+
+                      <div class="prop-optional-wrap" id="prop-optional-coords" style="margin-top:16px">
+                        <button type="button" class="prop-optional-toggle" aria-expanded="false" aria-controls="prop-optional-coords-body" id="prop-optional-coords-btn" onclick="togglePropOptionalCoords()">
+                          <span class="pot-left">
+                            <span class="pot-label">Longitude</span>
+                            <span class="pot-optional">*Optional</span>
+                          </span>
+                          <span class="pot-arrow" aria-hidden="true">▾</span>
+                        </button>
+                        <div class="prop-optional-body" id="prop-optional-coords-body" style="display:none">
+                          <div style="display:flex;gap:8px;flex-wrap:wrap;padding:0 16px 16px">
+                            <div style="flex:1;min-width:200px"><label class="label">Latitude</label><input class="input" id="prop-lat" placeholder="e.g. 42.3601"></div>
+                            <div style="flex:1;min-width:200px"><label class="label">Longitude</label><input class="input" id="prop-lng" placeholder="e.g. -71.0589"></div>
+                          </div>
+                        </div>
+                      </div>
                     </div>
+                    <div id="propdetail-map" style="width:280px;flex-shrink:0;height:360px;border-radius:16px;overflow:hidden;background:var(--gray-100)"></div>
                   </div>
 
-                  <div style="display:flex;align-items:baseline;gap:8px;margin:24px 0 12px;flex-wrap:wrap">
-                    <span style="font-weight:600;font-size:16px;line-height:24px">Rooms and beds</span>
-                    <span style="font-size:11px;color:var(--red);font-weight:600">*Required</span>
+                  <div style="margin:24px 0 12px">
+                    <span style="font:600 16px/24px var(--font);color:var(--text)">Rooms and beds</span>
                   </div>
-                  <div class="rooms-grid-4">
+                  <div class="rooms-grid-4" style="margin-bottom:0">
                     <div>
-                      <div style="font-size:12px;color:var(--text-dis);margin-bottom:4px">Max guests</div>
+                      <div style="font:500 14px/20px var(--font);color:var(--text);margin-bottom:4px">Max number of guests</div>
                       <div class="stepper" data-min="1" data-max="99">
                         <button type="button" onclick="adjustStepper(this,-1)" aria-label="Decrease max guests">−</button>
                         <div class="stepper-val">45</div>
@@ -2163,7 +2179,7 @@
                       </div>
                     </div>
                     <div>
-                      <div style="font-size:12px;color:var(--text-dis);margin-bottom:4px">Bedrooms</div>
+                      <div style="font:500 14px/20px var(--font);color:var(--text);margin-bottom:4px">Bedrooms</div>
                       <div class="stepper" data-min="0" data-max="50">
                         <button type="button" onclick="adjustStepper(this,-1)" aria-label="Decrease bedrooms">−</button>
                         <div class="stepper-val">3</div>
@@ -2171,85 +2187,68 @@
                       </div>
                     </div>
                     <div>
-                      <div style="font-size:12px;color:var(--text-dis);margin-bottom:4px">Bathrooms</div>
+                      <div style="font:500 14px/20px var(--font);color:var(--text);margin-bottom:4px">Bathrooms</div>
                       <div class="stepper" data-min="0" data-max="50">
                         <button type="button" onclick="adjustStepper(this,-1)" aria-label="Decrease bathrooms">−</button>
                         <div class="stepper-val">3</div>
                         <button type="button" onclick="adjustStepper(this,1)" aria-label="Increase bathrooms">+</button>
                       </div>
                     </div>
-                    <div>
-                      <div style="font-size:12px;color:var(--text-dis);margin-bottom:4px">Beds</div>
-                      <div class="stepper" data-min="1" data-max="99">
-                        <button type="button" onclick="adjustStepper(this,-1)" aria-label="Decrease beds">−</button>
-                        <div class="stepper-val">5</div>
-                        <button type="button" onclick="adjustStepper(this,1)" aria-label="Increase beds">+</button>
-                      </div>
-                    </div>
                   </div>
-                  <button type="button" class="btn btn-primary btn-save-prop-data" onclick="window.alert('Prototype: property data saved.')">Save changes</button>
+                  <button type="button" id="btn-save-propdata" class="btn-act-activate btn-save-dash" style="margin-top:24px;opacity:0.5;cursor:not-allowed" disabled onclick="saveDashChanges(this)">Save changes made</button>
                 </div>
 
                 <!-- Amenities Panel (hidden by default, shown on tab click) -->
                 <div id="amenities-panel" style="display:none">
-                  <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px">
-                    <h3 style="font-size:16px;font-weight:600;margin:0">Amenities</h3>
-                    <span class="label-hint" style="font-size:12px" title="Better amenity data improves comp matching.">ⓘ</span>
-                  </div>
-
-                  <div style="background:var(--blue-light);border:1px solid var(--blue-xl);border-radius:var(--r-8);padding:12px 16px;font-size:14px;color:var(--blue);margin-bottom:16px;display:flex;align-items:center;gap:8px">
-                    <span style="font-size:16px">💡</span>
-                    <span>The more amenities you add, the better your pricing will be. Accurate amenity data helps the algorithm correctly value your property against competitors.</span>
-                  </div>
-
-                  <div class="am-note">📋 Amenities data will be linked to Content Hub in a future release. For now, select applicable amenities manually.</div>
+                  <p style="font:500 16px/23px var(--font);color:var(--text);margin:0 0 16px">Add more amenities to help increase your price</p>
 
                   <div class="amenities-grid">
-                    <label class="amenity-item"><input type="checkbox" checked> Towels, bed sheets</label>
-                    <label class="amenity-item"><input type="checkbox" checked> Soap and toilet paper</label>
-                    <label class="amenity-item"><input type="checkbox"> TV</label>
+                    <label class="amenity-item"><input type="checkbox" checked> Towels, Bed sheets</label>
                     <label class="amenity-item"><input type="checkbox" checked> Cable TV</label>
-                    <label class="amenity-item"><input type="checkbox" checked> Air conditioning</label>
-                    <label class="amenity-item"><input type="checkbox"> Heating</label>
-                    <label class="amenity-item"><input type="checkbox"> Kitchen</label>
-                    <label class="amenity-item"><input type="checkbox" checked> Internet</label>
-                    <label class="amenity-item"><input type="checkbox" checked> WiFi</label>
-                    <label class="amenity-item"><input type="checkbox"> Hair dryer</label>
-                    <label class="amenity-item"><input type="checkbox" checked> Jacuzzi</label>
-                    <label class="amenity-item"><input type="checkbox"> Washing machine</label>
+                    <label class="amenity-item"><input type="checkbox"> kitchen</label>
+                    <label class="amenity-item"><input type="checkbox"> Hair Dryer</label>
                     <label class="amenity-item"><input type="checkbox" checked> Pool</label>
-                    <label class="amenity-item"><input type="checkbox"> Dryer</label>
-                    <label class="amenity-item"><input type="checkbox" checked> Breakfast</label>
                     <label class="amenity-item"><input type="checkbox"> Free parking on premises</label>
-                    <label class="amenity-item"><input type="checkbox" checked> Fitness Center</label>
-                    <label class="amenity-item"><input type="checkbox"> Indoor fireplace</label>
                     <label class="amenity-item"><input type="checkbox"> Balcony</label>
-                    <label class="amenity-item"><input type="checkbox"> Terrace</label>
-                    <label class="amenity-item"><input type="checkbox"> Buzzer/Wireless Intercom</label>
                     <label class="amenity-item"><input type="checkbox"> Doorman</label>
-                    <label class="amenity-item"><input type="checkbox"> Shampoo</label>
-                    <label class="amenity-item"><input type="checkbox"> Coat hangers</label>
                     <label class="amenity-item"><input type="checkbox"> Iron</label>
-                    <label class="amenity-item"><input type="checkbox"> Pets allowed</label>
-                    <label class="amenity-item"><input type="checkbox"> Wheelchair accessible</label>
                     <label class="amenity-item"><input type="checkbox"> Smoking not allowed</label>
-                    <label class="amenity-item"><input type="checkbox"> High chair</label>
-                    <label class="amenity-item"><input type="checkbox"> Basic equipment for cooking</label>
                     <label class="amenity-item"><input type="checkbox"> Work space</label>
-                    <label class="amenity-item"><input type="checkbox"> Safe</label>
-                    <label class="amenity-item"><input type="checkbox"> Ethernet connection</label>
-                    <label class="amenity-item"><input type="checkbox"> Soundsystem</label>
-                    <label class="amenity-item"><input type="checkbox"> Coffee maker</label>
-                    <label class="amenity-item"><input type="checkbox"> Freezer</label>
+                    <label class="amenity-item"><input type="checkbox"> Sound system</label>
                     <label class="amenity-item"><input type="checkbox"> Kettle</label>
-                    <label class="amenity-item"><input type="checkbox"> Microwave</label>
-                    <label class="amenity-item"><input type="checkbox"> Game console</label>
                     <label class="amenity-item"><input type="checkbox"> Dining table</label>
-                    <label class="amenity-item"><input type="checkbox"> Dishwasher machine</label>
-                    <label class="amenity-item"><input type="checkbox"> Smart TV</label>
                     <label class="amenity-item"><input type="checkbox"> Tablet</label>
+                    <label class="amenity-item"><input type="checkbox" checked> Soap and toilet paper</label>
+                    <label class="amenity-item"><input type="checkbox" checked> Air conditioning</label>
+                    <label class="amenity-item"><input type="checkbox" checked> Internet</label>
+                    <label class="amenity-item"><input type="checkbox" checked> Jacuzzi</label>
+                    <label class="amenity-item"><input type="checkbox"> Dryer</label>
+                    <label class="amenity-item"><input type="checkbox" checked> Fitness Center</label>
+                    <label class="amenity-item"><input type="checkbox"> Terrace</label>
+                    <label class="amenity-item"><input type="checkbox"> Shampoo</label>
+                    <label class="amenity-item"><input type="checkbox"> Pets allowed</label>
+                    <label class="amenity-item"><input type="checkbox"> High chair</label>
+                    <label class="amenity-item"><input type="checkbox"> Safe</label>
+                    <label class="amenity-item"><input type="checkbox"> Coffee maker</label>
+                    <label class="amenity-item"><input type="checkbox"> Microwave</label>
+                    <label class="amenity-item"><input type="checkbox"> Dishwasher machine</label>
                     <label class="amenity-item"><input type="checkbox"> Streaming services</label>
+                    <label class="amenity-item"><input type="checkbox"> TV</label>
+                    <label class="amenity-item"><input type="checkbox"> Heating</label>
+                    <label class="amenity-item"><input type="checkbox" checked> WiFi</label>
+                    <label class="amenity-item"><input type="checkbox"> washing machine</label>
+                    <label class="amenity-item"><input type="checkbox" checked> Breakfast</label>
+                    <label class="amenity-item"><input type="checkbox"> Indoor fireplace</label>
+                    <label class="amenity-item"><input type="checkbox"> Buzzer / Wireless Intercom</label>
+                    <label class="amenity-item"><input type="checkbox"> Coat hangers</label>
+                    <label class="amenity-item"><input type="checkbox"> Wheelchair accessible</label>
+                    <label class="amenity-item"><input type="checkbox"> Basic equipment for cooking</label>
+                    <label class="amenity-item"><input type="checkbox"> Ethernet connection</label>
+                    <label class="amenity-item"><input type="checkbox"> Freezer</label>
+                    <label class="amenity-item"><input type="checkbox"> Game console</label>
+                    <label class="amenity-item"><input type="checkbox"> Smart TV</label>
                   </div>
+                  <button type="button" id="btn-save-amenities" class="btn-act-activate btn-save-dash" style="margin-top:24px;opacity:0.5;cursor:not-allowed" disabled onclick="saveDashChanges(this)">Save changes made</button>
                 </div>
 
               </div>
@@ -2586,10 +2585,9 @@
     <div class="activate-fields-grid">
       <div class="activate-field-group">
         <label class="label" for="act-min-price">Global Minimum
-          <svg class="label-hint-icon" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="7" stroke="currentColor" stroke-width="1.2"/><path d="M8 7v4" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/><circle cx="8" cy="5" r="0.7" fill="currentColor"/></svg>
+          <span class="label-hint" tabindex="0" data-tooltip="Set minimum and maximum price limits to ensure listings are never priced outside of what you’d like."><svg class="label-hint-icon" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="7" stroke="currentColor" stroke-width="1.2"/><path d="M8 7v4" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/><circle cx="8" cy="5" r="0.7" fill="currentColor"/></svg></span>
         </label>
         <input type="number" class="input" id="act-min-price" min="0" step="1" placeholder="e.g. 75" oninput="clearActFieldError(this)" />
-        <p class="field-error" id="act-min-price-error">This field is required</p>
       </div>
       <div class="activate-field-group">
         <label class="label" for="act-currency">Currency
@@ -2601,14 +2599,12 @@
           <option value="GBP">British Pound</option>
           <option value="CHF">Swiss Franc</option>
         </select>
-        <p class="field-error" id="act-currency-error">This field is required</p>
       </div>
       <div class="activate-field-group">
         <label class="label" for="act-min-nights">Minimum nights stay
-          <svg class="label-hint-icon" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="7" stroke="currentColor" stroke-width="1.2"/><path d="M8 7v4" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/><circle cx="8" cy="5" r="0.7" fill="currentColor"/></svg>
+          <span class="label-hint" tabindex="0" data-tooltip="Set a minimum number of nights that a guest needs to book.&#10;&#10;When there are multiple rules for the same date, the rules will be applied in the order listed from lowest to highest priority. For example, a global minimum stay rule will always be overridden by a custom date rule."><svg class="label-hint-icon" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="7" stroke="currentColor" stroke-width="1.2"/><path d="M8 7v4" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/><circle cx="8" cy="5" r="0.7" fill="currentColor"/></svg></span>
         </label>
         <input type="number" class="input" id="act-min-nights" min="1" step="1" placeholder="e.g. 2" oninput="clearActFieldError(this)" />
-        <p class="field-error" id="act-min-nights-error">This field is required</p>
       </div>
     </div>
 
@@ -2642,14 +2638,15 @@
         </button>
       </div>
 
-      <div id="activate-strategy-context" class="activate-context-box">
-        <div id="activate-custom-base-block" class="hidden">
-          <div class="activate-field-group" style="margin-bottom:16px">
-            <label class="label" for="act-custom-base">Your custom base price</label>
+      <div id="activate-custom-base-block" class="activate-context-box hidden">
+        <div class="activate-field-group">
+          <label class="label" for="act-custom-base">Your custom base price
+              <span class="label-hint" tabindex="0" data-tooltip="The Base Price is the foundation of all of your daily prices.&#10;&#10;If you leverage a data-driven setting, your Base Price will adjust gradually over time, as we observe bookings on your listing and/or the market changes."><svg class="label-hint-icon" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="7" stroke="currentColor" stroke-width="1.2"/><path d="M8 7v4" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/><circle cx="8" cy="5" r="0.7" fill="currentColor"/></svg></span>
+            </label>
             <input type="number" class="input" id="act-custom-base" min="0" step="1" placeholder="e.g. 145" style="max-width:200px" oninput="clearActFieldError(this)" />
-            <p class="field-error" id="act-custom-base-error">This field is required</p>
-          </div>
         </div>
+      </div>
+      <div id="activate-aggression-block" class="activate-context-box">
         <p class="activate-context-lead">
           I want my price aggression to be in The
           <select id="act-aggression" class="act-aggression-select" aria-label="Price aggression level">
@@ -2671,53 +2668,21 @@
 </div>
 
 <div class="wh-overlay" id="activate-success-overlay" onclick="if(event.target===this) closeActivateSuccessModal()">
-  <div class="review-modal activate-success-modal" onclick="event.stopPropagation()" role="dialog" aria-labelledby="activate-success-heading">
-    <button type="button" class="startcheck-close" onclick="closeActivateSuccessModal()" aria-label="Close" style="position:absolute;top:16px;right:16px">×</button>
-    <div class="activate-success-hero">
-      <div class="activate-success-art-wrap">
-        <div class="activate-success-badge" aria-hidden="true">
-          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M20 6L9 17l-5-5" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
-          </svg>
-        </div>
-        <div class="activate-success-art">
-          <svg class="activate-success-illu" viewBox="0 0 280 150" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-            <title>Property and pricing growth</title>
-            <!-- Sparkles -->
-            <path fill="#fbd606" d="M38 26l2 5 5 1-5 3 2 6-4-3-4 3 2-6-5-3 5-1 2-5zm198 12l2 4 4 1-4 3 1 5-3-3-3 3 1-5-4-3 4-1 2-4zm22 44l2 4 4 1-4 3 1 5-3-3-3 3 1-5-4-3 4-1 2-4z"/>
-            <!-- Trees -->
-            <path fill="#1b5e20" d="M52 82 L62 56 L72 82z M212 86 L224 58 L236 86z"/>
-            <!-- Bushes -->
-            <ellipse fill="#c5e1a5" cx="44" cy="128" rx="22" ry="10"/>
-            <ellipse fill="#c5e1a5" cx="234" cy="128" rx="24" ry="11"/>
-            <!-- Tall house (left) -->
-            <rect fill="#102a61" x="68" y="48" width="44" height="80" rx="2"/>
-            <rect fill="#7296f1" x="68" y="48" width="22" height="80"/>
-            <rect fill="#d6e4ff" x="74" y="58" width="10" height="12" rx="1"/>
-            <rect fill="#d6e4ff" x="74" y="76" width="10" height="12" rx="1"/>
-            <rect fill="#d6e4ff" x="74" y="94" width="10" height="12" rx="1"/>
-            <rect fill="#102a61" x="84" y="110" width="12" height="18" rx="1"/>
-            <!-- Shorter house (right), attached visual -->
-            <rect fill="#102a61" x="118" y="70" width="48" height="58" rx="2"/>
-            <rect fill="#7296f1" x="118" y="70" width="24" height="58"/>
-            <rect fill="#d6e4ff" x="126" y="80" width="10" height="10" rx="1"/>
-            <rect fill="#d6e4ff" x="140" y="80" width="10" height="10" rx="1"/>
-            <rect fill="#102a61" x="134" y="104" width="14" height="24" rx="1"/>
-            <!-- Bar chart (above shorter section) -->
-            <rect fill="#7296f1" x="184" y="100" width="7" height="20" rx="1"/>
-            <rect fill="#7296f1" x="194" y="92" width="7" height="28" rx="1"/>
-            <rect fill="#7296f1" x="204" y="84" width="7" height="36" rx="1"/>
-            <rect fill="#7296f1" x="214" y="76" width="7" height="44" rx="1"/>
-            <rect fill="#7296f1" x="224" y="68" width="7" height="52" rx="1"/>
-            <!-- Growth arrow -->
-            <path fill="#102a61" d="M222 38 L248 32 L242 58 L234 52 L236 44 L222 40 Z"/>
-          </svg>
-        </div>
-      </div>
+  <div class="activate-success-modal" style="background:var(--bg);border-radius:24px;box-shadow:0 6px 12px rgba(0,0,0,0.1)" onclick="event.stopPropagation()" role="dialog" aria-labelledby="activate-success-heading">
+    <div style="display:flex;justify-content:flex-end;width:100%">
+      <button type="button" class="startcheck-close" onclick="closeActivateSuccessModal()" aria-label="Close">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
     </div>
-    <h2 id="activate-success-heading" class="activate-success-heading">Property is live!</h2>
-    <p id="activate-success-body" class="activate-success-body">Dynamic Pricing is now active. Manage it from your property dashboard.</p>
-    <button type="button" class="btn btn-primary activate-success-cta" onclick="finishActivationGoToDashboard()">Go to property dashboard</button>
+    <img class="activate-success-img" src="assets/success-illustration.png" alt="Success" />
+    <div style="display:flex;flex-direction:column;gap:4px">
+      <h2 id="activate-success-heading" class="activate-success-heading">Property is live!</h2>
+      <p id="activate-success-body" class="activate-success-body">Dynamic Pricing is now active. Manage it from your property dashboard.</p>
+    </div>
+    <div class="activate-success-actions">
+      <button type="button" class="btn-act-activate activate-success-cta" onclick="finishActivationGoToDashboard()">Go to property dashboard</button>
+      <button type="button" class="btn-success-secondary" onclick="returnToLobbyFromSuccess()">Return to lobby</button>
+    </div>
   </div>
 </div>
 
@@ -2769,15 +2734,33 @@
   </div>
 </div>
 
+<!-- ═══════ UNSAVED CHANGES WARNING ═══════ -->
+<div class="wh-overlay" id="unsaved-changes-overlay" onclick="if(event.target===this) closeUnsavedModal()">
+  <div style="background:var(--bg);border-radius:24px;box-shadow:0 6px 12px rgba(0,0,0,0.1);padding:32px;max-width:520px;width:90%;display:flex;flex-direction:column;gap:16px" onclick="event.stopPropagation()">
+    <h2 style="font:600 22px/28px var(--font);color:var(--text);margin:0">Unsaved changes</h2>
+    <p style="font:500 16px/23px var(--font);color:var(--text);margin:0">You have unsaved changes on this page. If you leave now, your updates to the pricing settings will be lost and your previous configuration will remain active.</p>
+    <div style="display:flex;gap:8px;justify-content:flex-end;margin-top:8px">
+      <button type="button" class="btn-act-activate" onclick="closeUnsavedModal()">Return to page</button>
+      <button type="button" class="btn-act-discard" onclick="leaveWithoutSaving()">Leave without saving</button>
+    </div>
+  </div>
+</div>
+
 <!-- ═══════ SDP DISABLE CONFIRMATION ═══════ -->
-<div class="wh-overlay" id="confirm-disable">
-  <div class="wh-modal" style="position:relative;width:420px;text-align:center;padding:32px">
-    <div style="font-size:36px;margin-bottom:12px">⚠️</div>
-    <h2 style="font-size:18px;margin-bottom:8px">Disable Dynamic Pricing?</h2>
-        <p style="font-size:14px;color:var(--text-dis);margin-bottom:24px;line-height:22px">Are you sure you want to disable Dynamic Pricing for <strong id="confirm-disable-name">Fantasy Garden Villa</strong>? Your prices will revert to manual.</p>
-    <div class="wh-footer" style="margin-top:0">
-      <button class="wh-cancel" onclick="cancelDisable()">Cancel</button>
-      <button class="wh-save" onclick="confirmDisable()" style="background:var(--red)">Yes, disable</button>
+<div class="wh-overlay" id="confirm-disable" onclick="if(event.target===this) cancelDisable()">
+  <div style="background:var(--bg);border-radius:24px;box-shadow:0 6px 12px rgba(0,0,0,0.1);padding:32px;max-width:520px;width:90%;display:flex;flex-direction:column;gap:16px" onclick="event.stopPropagation()">
+    <h2 style="font:600 22px/28px var(--font);color:var(--text);margin:0">Are you sure you want to deactivate Dynamic Pricing for <span id="confirm-disable-name">Fantasy Garden Villa</span>?</h2>
+    <p style="font:500 16px/23px var(--font);color:var(--text);margin:0">Your prices will no longer be adjusted automatically. Your calendar will revert to your manual rates, and any unsaved pricing settings will be lost.</p>
+    <div style="background:var(--bg-muted);border-radius:12px;padding:16px;display:flex;flex-direction:column;gap:12px">
+      <label style="display:flex;align-items:center;gap:8px;font:500 14px/20px var(--font);color:var(--text);cursor:pointer"><input type="checkbox" checked style="width:20px;height:20px"> I wish to continue using Smoobu Dynamic Pricing until subscription expires</label>
+      <div>
+        <div style="font:500 12px/16px var(--font);color:var(--text-dis);margin-bottom:4px">After unsubscribing</div>
+        <select class="select" style="width:100%;height:44px;border-radius:8px;border:1px solid var(--border);font:500 14px/20px var(--font)"><option>Keep the last updated dynamic prices</option><option>Revert to manual prices</option></select>
+      </div>
+    </div>
+    <div style="display:flex;gap:8px;justify-content:flex-end;margin-top:8px">
+      <button type="button" class="btn-act-activate" onclick="cancelDisable()">Cancel</button>
+      <button type="button" class="btn-act-discard" onclick="confirmDisable()">Deactivate</button>
     </div>
   </div>
 </div>
@@ -2833,7 +2816,7 @@
 
     <div class="wh-footer">
       <button class="wh-cancel" onclick="closeWhModal('bp')">Cancel</button>
-      <button class="wh-save" onclick="closeWhModal('bp')">Apply</button>
+      <button class="wh-save" onclick="closeWhModal('bp');enableSaveButton('btn-save-dynamic')">Apply</button>
     </div>
   </div>
 </div>
@@ -2875,7 +2858,7 @@
 
     <div class="wh-footer">
       <button class="wh-cancel" onclick="closeWhModal('mm')">Cancel</button>
-      <button class="wh-save" onclick="closeWhModal('mm')">Save Changes</button>
+      <button class="wh-save" onclick="closeWhModal('mm');enableSaveButton('btn-save-dynamic')">Save Changes</button>
     </div>
   </div>
 </div>
@@ -2926,7 +2909,7 @@
 
     <div class="wh-footer">
       <button class="wh-cancel" onclick="closeWhModal('ms')">Cancel</button>
-      <button class="wh-save" onclick="closeWhModal('ms')">Save Changes</button>
+      <button class="wh-save" onclick="closeWhModal('ms');enableSaveButton('btn-save-dynamic')">Save Changes</button>
     </div>
   </div>
 </div>
@@ -2960,7 +2943,7 @@
 
     <div class="wh-footer">
       <button class="wh-cancel" onclick="closeWhModal('ha')">Cancel</button>
-      <button class="wh-save" onclick="closeWhModal('ha')">Save Changes</button>
+      <button class="wh-save" onclick="closeWhModal('ha');enableSaveButton('btn-save-advanced')">Save Changes</button>
     </div>
   </div>
 </div>
@@ -3010,6 +2993,8 @@
   let unsubScope = null;
   let mapPicker = null;
   let mapMarker = null;
+  let propDetailMap = null;
+  let propDetailMarker = null;
   let addressMapInitTimer = null;
   const defaultCoordinates = { lat: 52.520008, lng: 13.404954 };
 
@@ -3666,13 +3651,28 @@
     syncStrategyButtons(document.querySelector('.wizard-step[data-step="3"]'), getPriceAggressionForProperty(pid));
   }
 
-  /** @param {"data"|"strategy"} [initialTab] — default Property data; use "strategy" after SDP activation */
-  function openPropertyPage(pid, initialTab = "data") {
+  const amenitiesInitialized = {};
+
+  function updateAmenityBanner() {
+    const banner = document.getElementById("prop-amenity-banner");
+    if (!banner) return;
+    const checked = document.querySelectorAll("#amenities-panel .amenity-item input[type='checkbox']:checked");
+    banner.style.display = checked.length === 0 ? "block" : "none";
+  }
+
+  /** @param {"data"|"strategy"} [initialTab] — default Price strategy */
+  function openPropertyPage(pid, initialTab = "strategy") {
     if (!PROPERTY_CATALOG[pid]) return;
     activePropertyId = pid;
     applyPropertyToDashboard(pid);
+    if (!amenitiesInitialized[pid]) {
+      amenitiesInitialized[pid] = true;
+      document.querySelectorAll("#amenities-panel .amenity-item input[type='checkbox']").forEach(cb => cb.checked = false);
+    }
+    updateAmenityBanner();
     showDashTab(initialTab === "strategy" ? "strategy" : "data");
     showView("dashboard");
+    dashHasUnsavedChanges = false;
   }
 
   function showDashTab(which) {
@@ -3680,18 +3680,38 @@
     const data = document.getElementById("tab-data");
     const tabs = document.querySelectorAll("#dash-tabs .tab");
     if (!strat || !data) return;
-    /* tabs[0] = Property data, tabs[1] = Price strategy — Figma 669:334238 / 669:334039 */
     if (which === "strategy") {
       strat.style.display = "block";
       data.style.display = "none";
-      tabs[1]?.classList.add("active");
-      tabs[0]?.classList.remove("active");
+      tabs[0]?.classList.add("active");
+      tabs[1]?.classList.remove("active");
     } else {
       strat.style.display = "none";
       data.style.display = "block";
-      tabs[0]?.classList.add("active");
-      tabs[1]?.classList.remove("active");
+      tabs[1]?.classList.add("active");
+      tabs[0]?.classList.remove("active");
+      setTimeout(() => initPropDetailMap(), 100);
     }
+  }
+
+  function initPropDetailMap() {
+    const mapEl = document.getElementById("propdetail-map");
+    if (!mapEl) return;
+    const addr = propertyAddressByPid[activePropertyId];
+    const lat = addr?.lat || 52.52;
+    const lng = addr?.lng || 13.405;
+    if (propDetailMap) {
+      propDetailMap.remove();
+      propDetailMap = null;
+      propDetailMarker = null;
+    }
+    propDetailMap = L.map("propdetail-map", { zoomControl: true }).setView([lat, lng], 13);
+    L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+      maxZoom: 19,
+      attribution: "&copy; OpenStreetMap"
+    }).addTo(propDetailMap);
+    propDetailMarker = L.marker([lat, lng]).addTo(propDetailMap);
+    setTimeout(() => propDetailMap?.invalidateSize(), 200);
   }
 
   function goToPropertyDataAmenities() {
@@ -3777,8 +3797,12 @@
   }
 
   const LOBBY_DOT_TITLE_OFF = "Add address to activate.";
-  const LOBBY_DOT_TITLE_AMBER = "Finish activation to connect.";
+  const LOBBY_DOT_TITLE_AMBER = "Connecting";
   const LOBBY_DOT_TITLE_ON = "Dynamic Pricing active.";
+
+  function isOutOfMarket(item) {
+    return item.added && (item.country === "United States" || item.country === "US" || item.country === "USA");
+  }
 
   function lobbyStatusDotHtml(item) {
     if (!item) {
@@ -3787,11 +3811,17 @@
     if (item.sdpActivated === true) {
       return `<span class="lobby-status-dot lobby-status-dot--on" title="${LOBBY_DOT_TITLE_ON}" role="img" aria-label="${LOBBY_DOT_TITLE_ON}"></span>`;
     }
+    if (item._connecting) {
+      return `<span class="lobby-dot-wrap"><span class="lobby-status-dot lobby-status-dot--amber"></span><span class="lobby-dot-tooltip">Connecting</span></span>`;
+    }
+    if (isOutOfMarket(item) && lobbyQualificationPhase !== "checking") {
+      return `<span class="lobby-dot-wrap"><span class="lobby-status-dot lobby-status-dot--off"></span><span class="lobby-dot-tooltip">Property address isn\u2019t currently available for dynamic pricing</span></span>`;
+    }
     if (item.added && lobbyQualificationPhase === "ready") {
       return `<span class="lobby-dot-wrap"><span class="lobby-status-dot lobby-status-dot--off"></span><span class="lobby-dot-tooltip">Deactivated</span></span>`;
     }
-    if (item.added) {
-      return `<span class="lobby-status-dot lobby-status-dot--amber" title="${LOBBY_DOT_TITLE_AMBER}" role="img" aria-label="${LOBBY_DOT_TITLE_AMBER}"></span>`;
+    if (item.added && lobbyQualificationPhase === "checking") {
+      return `<span class="lobby-dot-wrap"><span class="lobby-status-dot lobby-status-dot--amber"></span><span class="lobby-dot-tooltip">Connecting</span></span>`;
     }
     return `<span class="lobby-status-dot lobby-status-dot--off" title="${LOBBY_DOT_TITLE_OFF}" role="img" aria-label="${LOBBY_DOT_TITLE_OFF}"></span>`;
   }
@@ -3825,6 +3855,20 @@
               <div class="lobby-card-sub">${addr} ${editIcon}</div>
             </div>
             <span class="btn-lobby btn-lobby-ghost">Activate</span>
+          </div>`;
+    }
+    if (isOutOfMarket(item)) {
+      return `
+          <div class="lobby-property-card" data-checklist-id="${item.id}">
+            <div class="lobby-card-text">
+              <div class="lobby-card-title-row">
+                <span class="lobby-card-title">${item.name}</span>
+                ${dot}
+                <span class="lobby-tag lobby-tag--dark">Out of market</span>
+              </div>
+              <div class="lobby-card-sub">${addr} ${editIcon}</div>
+            </div>
+            <span class="btn-lobby btn-lobby-ghost" style="color:var(--text-dis);border-color:var(--text-dis);cursor:default">Activate</span>
           </div>`;
     }
     if (lobbyQualificationPhase === "ready" && !item.sdpActivated) {
@@ -3875,6 +3919,15 @@
     requestAnimationFrame(() => {
       openAddressPanel(checklistId);
     });
+  }
+
+  function showConnectingBriefly(item) {
+    item._connecting = true;
+    renderLobbyRentals();
+    setTimeout(() => {
+      item._connecting = false;
+      renderLobbyRentals();
+    }, 3000);
   }
 
   function advanceLobbyToReady() {
@@ -4018,6 +4071,7 @@
     const dataBtn = document.getElementById("pm-card-data");
     const customBtn = document.getElementById("pm-card-custom");
     const customBlock = document.getElementById("activate-custom-base-block");
+    const aggressionBlock = document.getElementById("activate-aggression-block");
     const isData = mode === "data";
     if (dataBtn) {
       dataBtn.classList.toggle("selected", isData);
@@ -4028,6 +4082,7 @@
       customBtn.setAttribute("aria-pressed", (!isData).toString());
     }
     customBlock?.classList.toggle("hidden", isData);
+    aggressionBlock?.classList.toggle("hidden", !isData);
     if (activateModalChecklistId) setBasePriceModeForProperty(activateModalChecklistId, isData ? "data" : "custom");
     refreshActivateStrategyHint();
   }
@@ -4040,13 +4095,11 @@
     const currencyEl = document.getElementById("act-currency");
     const aggressionEl = document.getElementById("act-aggression");
     const customBaseEl = document.getElementById("act-custom-base");
-    const mm = String(p.minmax || "");
-    const m = mm.match(/(\d+)\s*[–-]\s*(\d+)/);
-    if (minEl) minEl.value = m ? m[1] : String(p.base || "");
-    if (nightsEl) nightsEl.value = p.minstay || "";
+    if (minEl) minEl.value = "";
+    if (nightsEl) nightsEl.value = "";
     if (currencyEl) currencyEl.value = p.currency || "EUR";
     if (aggressionEl) aggressionEl.value = getPriceAggressionForProperty(pid);
-    if (customBaseEl) customBaseEl.value = p.base || "";
+    if (customBaseEl) customBaseEl.value = "";
     const useCustom = (p.bpMode || p.pricingMethod) === "custom";
     setActivatePricingMethod(useCustom ? "custom" : "data");
     updateActivateAggressionHint();
@@ -4119,15 +4172,11 @@
 
   function clearActFieldError(el) {
     el.classList.remove("has-error");
-    const errEl = el.parentElement?.querySelector(".field-error");
-    if (errEl) errEl.classList.remove("show");
   }
 
-  function showActFieldError(inputId, msg) {
+  function showActFieldError(inputId) {
     const el = document.getElementById(inputId);
-    const errEl = document.getElementById(inputId + "-error");
     if (el) el.classList.add("has-error");
-    if (errEl) { errEl.textContent = msg || "This field is required"; errEl.classList.add("show"); }
   }
 
   function validateActivateForm() {
@@ -4183,6 +4232,10 @@
     activateModalChecklistId = null;
     lastActivateSuccessPropertyId = null;
     if (pid) openPropertyPage(pid, "strategy");
+  }
+
+  function returnToLobbyFromSuccess() {
+    closeActivateSuccessModal();
   }
 
   // ── START CHECK FLOW (Step 1: list + inline address, Step 2: review) ──
@@ -4257,6 +4310,7 @@
     addressChecklist[idx].lng = Number.isFinite(lng) ? lng : defaultCoordinates.lng;
     addressChecklist[idx].added = onboardingAddressFieldsComplete(addressChecklist[idx]);
     syncChecklistItemToPropertyStore(addressChecklist[idx]);
+    if (addressChecklist[idx].added) showConnectingBriefly(addressChecklist[idx]);
     closeEditAddressModal();
   }
 
@@ -4375,10 +4429,8 @@
         if (isExpanded) {
           return `
       <div class="startcheck-item expanded" data-id="${item.id}">
-        <div class="startcheck-expanded" style="margin-top:0;border-top:none;padding-top:0">
-          <div class="exp-title">${item.name}</div>
-          ${addressFormHtml()}
-        </div>
+        <div class="exp-title" style="font:600 16px/20px var(--font);color:var(--text);margin-bottom:16px">${item.name}</div>
+        ${addressFormHtml()}
       </div>`;
         }
         let tagHtml;
@@ -4408,12 +4460,18 @@
     const startBtn = document.getElementById("start-check-btn");
     const tooltip = document.getElementById("sc-tooltip");
     const someAdded = addressChecklist.some((item) => item.added);
-    if (someAdded) {
+    const anyExpanded = expandedChecklistId != null;
+    if (someAdded && !anyExpanded) {
       startBtn.classList.add("active");
       if (tooltip) tooltip.classList.add("hidden");
     } else {
       startBtn.classList.remove("active");
-      if (tooltip) tooltip.classList.remove("hidden");
+      if (tooltip) {
+        tooltip.classList.remove("hidden");
+        tooltip.textContent = anyExpanded
+          ? "Please save or discard the open address first"
+          : "You need to add at least 1 address in order to proceed";
+      }
     }
   }
 
@@ -4452,6 +4510,13 @@
       { text: "8 Place Bellecour, Lyon, France", line1: "8 Place Bellecour", postal: "69002", city: "Lyon", state: "Auvergne-Rhône-Alpes", country: "France", lat: 45.7578, lng: 4.8320 },
       { text: "5 Rue Sainte-Catherine, Bordeaux, France", line1: "5 Rue Sainte-Catherine", postal: "33000", city: "Bordeaux", state: "Nouvelle-Aquitaine", country: "France", lat: 44.8378, lng: -0.5792 },
       { text: "12 Quai des Bateliers, Strasbourg, France", line1: "12 Quai des Bateliers", postal: "67000", city: "Strasbourg", state: "Grand Est", country: "France", lat: 48.5804, lng: 7.7497 }
+    ],
+    "United States": [
+      { text: "350 Fifth Avenue, New York, United States", line1: "350 Fifth Avenue", postal: "10118", city: "New York", state: "New York", country: "United States", lat: 40.7484, lng: -73.9857 },
+      { text: "1600 Pennsylvania Ave NW, Washington, United States", line1: "1600 Pennsylvania Ave NW", postal: "20500", city: "Washington", state: "District of Columbia", country: "United States", lat: 38.8977, lng: -77.0365 },
+      { text: "233 S Wacker Dr, Chicago, United States", line1: "233 S Wacker Dr", postal: "60606", city: "Chicago", state: "Illinois", country: "United States", lat: 41.8789, lng: -87.6359 },
+      { text: "1 Infinite Loop, Cupertino, United States", line1: "1 Infinite Loop", postal: "95014", city: "Cupertino", state: "California", country: "United States", lat: 37.3318, lng: -122.0312 },
+      { text: "600 Biscayne Blvd, Miami, United States", line1: "600 Biscayne Blvd", postal: "33132", city: "Miami", state: "Florida", country: "United States", lat: 25.7825, lng: -80.1865 }
     ],
     "Italy": [
       { text: "Via del Corso 18, Rome, Italy", line1: "Via del Corso 18", postal: "00186", city: "Rome", state: "Lazio", country: "Italy", lat: 41.9028, lng: 12.4964 },
@@ -5017,9 +5082,12 @@
   function togglePropOptionalCoords() {
     const wrap = document.getElementById("prop-optional-coords");
     const btn = document.getElementById("prop-optional-coords-btn");
+    const body = document.getElementById("prop-optional-coords-body");
     if (!wrap || !btn) return;
     wrap.classList.toggle("open");
-    btn.setAttribute("aria-expanded", wrap.classList.contains("open"));
+    const isOpen = wrap.classList.contains("open");
+    btn.setAttribute("aria-expanded", isOpen);
+    if (body) body.style.display = isOpen ? "block" : "none";
   }
 
   function syncStepperButtons(stepper) {
@@ -5073,9 +5141,11 @@
     document.getElementById('confirm-disable').classList.remove('open');
     const cr = checklistRowForAnyPid(activePropertyId);
     if (cr) cr.sdpActivated = false;
+    dashHasUnsavedChanges = false;
     renderPricingCalendar();
     renderLobbyRentals();
     syncDashboardSdpSegment();
+    showView("lobby");
   }
   function cancelDisable() {
     document.getElementById('confirm-disable').classList.remove('open');
@@ -5154,6 +5224,126 @@
     }
   }
 
+  let dashHasUnsavedChanges = false;
+  let pendingNavigationTarget = null;
+
+  function closeUnsavedModal() {
+    document.getElementById("unsaved-changes-overlay")?.classList.remove("open");
+    pendingNavigationTarget = null;
+  }
+
+  function leaveWithoutSaving() {
+    dashHasUnsavedChanges = false;
+    document.querySelectorAll(".btn-save-dash").forEach(btn => {
+      btn.disabled = true;
+      btn.style.opacity = "0.5";
+      btn.style.cursor = "not-allowed";
+      btn.classList.remove("is-sticky");
+      if (btn.id === "btn-save-dynamic") btn.style.color = "var(--text-dis)";
+    });
+    document.getElementById("unsaved-changes-overlay")?.classList.remove("open");
+    if (pendingNavigationTarget) {
+      const target = pendingNavigationTarget;
+      pendingNavigationTarget = null;
+      showView(target);
+    }
+  }
+
+  function tryLeaveDashboard(target) {
+    if (dashHasUnsavedChanges) {
+      pendingNavigationTarget = target;
+      document.getElementById("unsaved-changes-overlay")?.classList.add("open");
+      return true;
+    }
+    return false;
+  }
+
+  function enableSaveButton(btnId) {
+    const btn = document.getElementById(btnId);
+    if (!btn || !btn.disabled) return;
+    btn.disabled = false;
+    btn.style.opacity = "";
+    btn.style.cursor = "";
+    dashHasUnsavedChanges = true;
+    if (btn.id === "btn-save-dynamic") {
+      btn.style.color = "var(--text-2)";
+    }
+  }
+
+  function saveDashChanges(btn) {
+    if (btn.disabled) return;
+    btn.disabled = true;
+    btn.style.opacity = "0.5";
+    btn.style.cursor = "not-allowed";
+    dashHasUnsavedChanges = false;
+    if (btn.id === "btn-save-dynamic") {
+      btn.style.color = "var(--text-dis)";
+    }
+    window.alert("Prototype: changes saved.");
+  }
+
+  function initDashChangeTracking() {
+    document.querySelectorAll(".config-row .gear, .config-row .cr-val").forEach(el => {
+      el.addEventListener("click", () => enableSaveButton("btn-save-dynamic"));
+    });
+    document.querySelectorAll(".slider-aggression-range").forEach(input => {
+      input.addEventListener("input", () => enableSaveButton("btn-save-advanced"));
+    });
+    const propPanel = document.getElementById("propdetail-panel");
+    if (propPanel) {
+      propPanel.addEventListener("input", () => enableSaveButton("btn-save-propdata"));
+      propPanel.addEventListener("change", () => enableSaveButton("btn-save-propdata"));
+    }
+    const amPanel = document.getElementById("amenities-panel");
+    if (amPanel) {
+      amPanel.addEventListener("change", () => {
+        enableSaveButton("btn-save-amenities");
+        updateAmenityBanner();
+      });
+    }
+  }
+
+  function initChartTooltipHover() {
+    const chartWrap = document.querySelector(".chart-wrap");
+    const tooltip = document.getElementById("chart-tooltip-demo");
+    if (!chartWrap || !tooltip) return;
+    const chartData = [
+      { date: "Mon, Jun 30, 2026", obs: 82,  rec: 79,  book: 85  },
+      { date: "Mon, Jul 7, 2026",  obs: 78,  rec: 84,  book: 80  },
+      { date: "Mon, Jul 14, 2026", obs: 91,  rec: 88,  book: 95  },
+      { date: "Mon, Jul 21, 2026", obs: 85,  rec: 82,  book: 88  },
+      { date: "Mon, Jul 28, 2026", obs: 97,  rec: 95,  book: 100 },
+      { date: "Mon, Aug 4, 2026",  obs: 105, rec: 102, book: 110 },
+      { date: "Mon, Aug 11, 2026", obs: 112, rec: 108, book: 115 },
+      { date: "Mon, Aug 18, 2026", obs: 95,  rec: 99,  book: 98  },
+      { date: "Mon, Aug 25, 2026", obs: 88,  rec: 92,  book: 90  },
+      { date: "Mon, Sep 1, 2026",  obs: 76,  rec: 80,  book: 78  },
+      { date: "Mon, Sep 8, 2026",  obs: 72,  rec: 75,  book: 70  },
+      { date: "Mon, Sep 15, 2026", obs: 68,  rec: 71,  book: 65  },
+      { date: "Mon, Sep 22, 2026", obs: 74,  rec: 78,  book: 72  },
+      { date: "Mon, Sep 29, 2026", obs: 80,  rec: 83,  book: 82  },
+    ];
+    const sym = PROPERTY_CATALOG[activePropertyId]?.sym || "€";
+    chartWrap.addEventListener("mousemove", (e) => {
+      const rect = chartWrap.getBoundingClientRect();
+      const x = e.clientX - rect.left;
+      const pct = x / rect.width;
+      const clampedLeft = Math.max(120, Math.min(x, rect.width - 120));
+      tooltip.style.left = clampedLeft + "px";
+      tooltip.style.transform = "translateX(-50%)";
+      const idx = Math.min(Math.floor(pct * chartData.length), chartData.length - 1);
+      const d = chartData[idx];
+      const dateEl = tooltip.querySelector(".ct-date");
+      const obsEl = document.getElementById("tt-obs");
+      const recEl = document.getElementById("tt-rec");
+      const bookEl = document.getElementById("tt-book");
+      if (dateEl) dateEl.textContent = d.date;
+      if (obsEl) obsEl.textContent = sym + d.obs;
+      if (recEl) recEl.textContent = sym + d.rec;
+      if (bookEl) bookEl.textContent = sym + d.book;
+    });
+  }
+
   function initAdvancedAggressionSliders() {
     document.querySelectorAll(".slider-aggression-range").forEach((input) => {
       syncAggressionSlider(input);
@@ -5174,6 +5364,8 @@
   hydrateLabelHints();
   initAdvancedAggressionSliders();
   initSteppers();
+  initChartTooltipHover();
+  initDashChangeTracking();
   document.getElementById("act-aggression")?.addEventListener("change", updateActivateAggressionHint);
   renderLobbyRentals();
 
