@@ -2072,10 +2072,10 @@
               <div class="dash-side">
                 <div class="config-panel">
                   <div class="cp-header"><span class="cp-title" style="font:600 20px/24px var(--font);color:var(--text)">Dynamic settings</span></div>
-                  <div class="config-row"><div><div class="cr-left"><div class="cr-dot"></div><span class="cr-label">Base price</span><span class="label-hint" title="Starting nightly price in rule-based mode. Dynamic Pricing adjusts it daily. Min/max limits stay separate.">ⓘ</span></div></div><div class="cr-right"><span class="cr-val" id="cr-base">€172</span><span class="cr-badge cr-badge-agg-pink">AGG</span><span class="gear" onclick="openWhModal('bp')" title="Open base price settings" role="button" tabindex="0">⚙</span></div></div>
+                  <div class="config-row"><div><div class="cr-left"><div class="cr-dot"></div><span class="cr-label">Base price</span><span class="label-hint" title="Starting nightly price in rule-based mode. Dynamic Pricing adjusts it daily. Min/max limits stay separate.">ⓘ</span></div></div><div class="cr-right"><span class="cr-val" id="cr-base">€172</span><span class="cr-badge cr-badge-rec" id="cr-base-badge">REC</span><span class="gear" onclick="openWhModal('bp')" title="Open base price settings" role="button" tabindex="0">⚙</span></div></div>
                   <div class="config-row"><div><div class="cr-left"><div class="cr-dot"></div><span class="cr-label">Minimum/Maximum</span><span class="label-hint" title="SDP only suggests prices inside this range.">ⓘ</span></div></div><div class="cr-right"><span class="cr-val" id="cr-minmax">€75 – €500</span><span class="gear" onclick="openWhModal('mm')" title="Open minimum and maximum price limits" role="button" tabindex="0">⚙</span></div></div>
                   <div class="config-row"><div><div class="cr-left"><div class="cr-dot"></div><span class="cr-label">Minimum stays</span><span class="label-hint" title="Synced with your rate to booking portals.">ⓘ</span></div></div><div class="cr-right"><span class="cr-val" id="cr-minstay">7 nights</span><span class="gear" onclick="openWhModal('ms')" title="Open minimum stay settings" role="button" tabindex="0">⚙</span></div></div>
-                  <button type="button" id="btn-save-dynamic" class="btn-save-dash" style="background:none;border:none;font:500 14px/20px var(--font);color:var(--text-dis);cursor:default;padding:8px 0;text-align:right;width:100%;margin-top:8px" disabled onclick="saveDashChanges(this)">Save changes made</button>
+                  <button type="button" id="btn-save-dynamic" class="btn-act-activate btn-save-dash" style="width:100%;margin-top:12px;justify-content:center;opacity:0.5;cursor:not-allowed" disabled onclick="saveDashChanges(this)">Save changes made</button>
                 </div>
               </div>
             </div>
@@ -2816,7 +2816,7 @@
 
     <div class="wh-footer">
       <button class="wh-cancel" onclick="closeWhModal('bp')">Cancel</button>
-      <button class="wh-save" onclick="closeWhModal('bp');enableSaveButton('btn-save-dynamic')">Apply</button>
+      <button class="wh-save" onclick="applyBasePriceConfig()">Apply</button>
     </div>
   </div>
 </div>
@@ -2828,11 +2828,11 @@
     <h2>Minimum/Maximum Price Configuration</h2>
 
     <div class="wh-section-title" style="margin-top:0">Global Minimum<span class="wh-required">(Required)</span></div>
-    <div style="display:flex;align-items:center;gap:8px;margin-bottom:4px"><span style="font-weight:600">€</span><input class="wh-input" value="94"></div>
+    <div style="display:flex;align-items:center;gap:8px;margin-bottom:4px"><span style="font-weight:600">€</span><input class="wh-input" id="mm-global-min" value="94"></div>
     <div class="wh-helper">Base minimum price for all dates</div>
 
     <div class="wh-section-title">Global Maximum<span class="wh-optional">(Optional)</span></div>
-    <div style="display:flex;align-items:center;gap:8px;margin-bottom:4px"><span style="font-weight:600">€</span><input class="wh-input" value="500"></div>
+    <div style="display:flex;align-items:center;gap:8px;margin-bottom:4px"><span style="font-weight:600">€</span><input class="wh-input" id="mm-global-max" value="500"></div>
     <div class="wh-helper">Base maximum price for all dates</div>
 
     <div class="wh-section-title">Set Limits By<span class="wh-optional">(Optional)</span></div>
@@ -2858,7 +2858,7 @@
 
     <div class="wh-footer">
       <button class="wh-cancel" onclick="closeWhModal('mm')">Cancel</button>
-      <button class="wh-save" onclick="closeWhModal('mm');enableSaveButton('btn-save-dynamic')">Save Changes</button>
+      <button class="wh-save" onclick="applyMinMaxConfig()">Save Changes</button>
     </div>
   </div>
 </div>
@@ -2870,7 +2870,7 @@
     <h2>Minimum Stays Configuration</h2>
 
     <div class="wh-section-title" style="margin-top:0">Global Minimum<span class="wh-required">(Required)</span></div>
-    <div style="display:flex;align-items:center;gap:8px;margin-bottom:4px"><input class="wh-input" value="3"><span style="font-size:14px;font-weight:500">nights</span></div>
+    <div style="display:flex;align-items:center;gap:8px;margin-bottom:4px"><input class="wh-input" id="ms-global-min" value="3"><span style="font-size:14px;font-weight:500">nights</span></div>
     <div class="wh-helper">Base minimum stay requirement for all dates</div>
 
     <div class="wh-section-title">Set Limits By<span class="wh-optional">(Optional)</span></div>
@@ -2909,7 +2909,7 @@
 
     <div class="wh-footer">
       <button class="wh-cancel" onclick="closeWhModal('ms')">Cancel</button>
-      <button class="wh-save" onclick="closeWhModal('ms');enableSaveButton('btn-save-dynamic')">Save Changes</button>
+      <button class="wh-save" onclick="applyMinStaysConfig()">Save Changes</button>
     </div>
   </div>
 </div>
@@ -4931,7 +4931,9 @@
 
   // ── WHEELHOUSE MODALS ──
   function openWhModal(id) {
-    if (id === "bp") syncDashboardBasePriceModeUi();
+    if (id === "bp") { hydrateBasePriceModal(); syncDashboardBasePriceModeUi(); }
+    if (id === "mm") hydrateMinMaxModal();
+    if (id === "ms") hydrateMinStaysModal();
     document.getElementById('wh-' + id).classList.add('open');
   }
   function closeWhModal(id) {
@@ -5041,9 +5043,95 @@
     });
   }
 
+  function hydrateBasePriceModal() {
+    const p = PROPERTY_CATALOG[activePropertyId];
+    if (!p) return;
+    const customInput = document.querySelector("#bp-custom-area .wh-input");
+    if (customInput) customInput.value = p.base || "";
+  }
+
+  function hydrateMinMaxModal() {
+    const p = PROPERTY_CATALOG[activePropertyId];
+    if (!p) return;
+    const parts = String(p.minmax).split(/\s*[–\u2013-]\s*/);
+    const minInput = document.getElementById("mm-global-min");
+    const maxInput = document.getElementById("mm-global-max");
+    if (minInput) minInput.value = parts[0] || "";
+    if (maxInput) maxInput.value = parts[1] || "";
+  }
+
+  function hydrateMinStaysModal() {
+    const p = PROPERTY_CATALOG[activePropertyId];
+    if (!p) return;
+    const globalInput = document.getElementById("ms-global-min");
+    if (globalInput) globalInput.value = p.minstay || "";
+  }
+
+  function applyBasePriceConfig() {
+    const p = PROPERTY_CATALOG[activePropertyId];
+    if (!p) { closeWhModal('bp'); return; }
+    const sym = p.sym || "€";
+    const mode = getBasePriceModeForProperty(activePropertyId);
+    const baseEl = document.getElementById("cr-base");
+    const crBadge = document.querySelector(".config-row .cr-badge");
+    if (mode === "custom") {
+      const customInput = document.querySelector("#bp-custom-area .wh-input");
+      const val = customInput ? customInput.value.trim() : p.base;
+      if (baseEl) baseEl.textContent = sym + val;
+      p.base = val;
+      if (crBadge) { crBadge.textContent = ""; crBadge.className = "cr-badge"; crBadge.style.display = "none"; }
+    } else {
+      const recPrice = document.querySelector("#bp-data-area span[style*='font-size:24px']");
+      const recVal = recPrice ? recPrice.textContent.replace(/[^\d]/g, "") : null;
+      const newBase = recVal || p.base;
+      if (baseEl) baseEl.textContent = sym + newBase;
+      p.base = newBase;
+      if (crBadge) { crBadge.style.display = ""; }
+      syncDashboardAggressionBadge();
+    }
+    closeWhModal('bp');
+    enableSaveButton('btn-save-dynamic');
+  }
+
+  function applyMinMaxConfig() {
+    const p = PROPERTY_CATALOG[activePropertyId];
+    if (!p) { closeWhModal('mm'); return; }
+    const minInput = document.getElementById("mm-global-min");
+    const maxInput = document.getElementById("mm-global-max");
+    const minVal = minInput ? minInput.value.trim() : "";
+    const maxVal = maxInput ? maxInput.value.trim() : "";
+    if (minVal || maxVal) {
+      p.minmax = (minVal || "0") + " \u2013 " + (maxVal || "0");
+      const mmEl = document.getElementById("cr-minmax");
+      if (mmEl) mmEl.textContent = p.sym + p.minmax;
+    }
+    closeWhModal('mm');
+    enableSaveButton('btn-save-dynamic');
+  }
+
+  function applyMinStaysConfig() {
+    const p = PROPERTY_CATALOG[activePropertyId];
+    if (!p) { closeWhModal('ms'); return; }
+    const globalInput = document.getElementById("ms-global-min");
+    const val = globalInput ? globalInput.value.trim() : "";
+    if (val) {
+      p.minstay = val;
+      const msEl = document.getElementById("cr-minstay");
+      if (msEl) msEl.textContent = val + " nights";
+    }
+    closeWhModal('ms');
+    enableSaveButton('btn-save-dynamic');
+  }
+
   function syncDashboardAggressionBadge() {
     const crBadge = document.querySelector(".config-row .cr-badge");
     if (!crBadge) return;
+    const mode = getBasePriceModeForProperty(activePropertyId);
+    if (mode === "custom") {
+      crBadge.style.display = "none";
+      return;
+    }
+    crBadge.style.display = "";
     const level = getPriceAggressionForProperty(activePropertyId);
     const map = {
       conservative: { text: "CON", cls: "cr-badge-con" },
@@ -5265,9 +5353,7 @@
     btn.style.opacity = "";
     btn.style.cursor = "";
     dashHasUnsavedChanges = true;
-    if (btn.id === "btn-save-dynamic") {
-      btn.style.color = "var(--text-2)";
-    }
+    btn.style.color = "";
   }
 
   function saveDashChanges(btn) {
